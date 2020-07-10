@@ -1,9 +1,11 @@
 package com.example.sss.dao;
-import com.example.sss.domain.User;
-import org.apache.ibatis.annotations.Mapper;
+
+import com.example.sss.model.User;
 import org.springframework.stereotype.Repository;
 
-//@Mapper     //声明是一个Mapper,与springbootApplication中的@MapperScan二选一写上即可
+/**
+ * Created by beyondLi on 2017/6/19.
+ */
 @Repository
 public interface UserMapper {
     User selectUserByName(String name);

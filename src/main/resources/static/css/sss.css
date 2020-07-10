@@ -1,0 +1,72 @@
+.layui-layout-admin .layui-logo { color: #2f4056 } .layui-elem-quote { border-left-color: #2f4056 } .layui-btn { background-color: #ff8c00    } .layui-btn-primary { background-color: #fff } .layui-btn-primary:hover { border-color: #ff8c00 } .layui-btn-group .layui-btn-primary:hover { color: #2f4056 } .layui-laypage a:hover { color: #2f4056 } .layui-laypage .layui-laypage-curr .layui-laypage-em { background-color: #2f4056 } .layui-laypage select:focus { border-color: #2f4056 !important } .layui-upload-drag .layui-icon { font-size: 50px; color: #2f4056 } .layui-upload-drag[lay-over] { border-color: #2f4056 } .layui-nav-tree .layui-nav-child dd.layui-this a { background-color: #2f4056 } .layui-nav-tree .layui-nav-bar { background-color: #2f4056 } .layui-tab-brief > .layui-tab-title .layui-this { color: #2f4056 } .layui-slider-input-btn i:hover { color: #2f4056 } .layui-slider-wrap-btn { border-color: #2f4056 !important } .layui-slider-bar { background: #2f4056 !important } html .layui-laydate .layui-this { background-color: #2f4056 !important } .laydate-theme-molv .layui-laydate-header { background-color: #2f4056 } .laydate-theme-grid .laydate-selected, .laydate-theme-grid .laydate-selected:hover { color: #2f4056 !important } .layui-progress-bar { background-color: #ff8c00 } .layui-form-select dl dd.layui-this { background-color: #ff8c00 } .layui-form-checked, .layui-form-checked:hover { border-color: #ff8c00 } .layui-form-checked span, .layui-form-checked:hover span { background-color: #ff8c00 } .layui-form-checked i, .layui-form-checked:hover i { color: #ff8c00 } .layui-form-checkbox[lay-skin=primary]:hover i { border-color: #ff8c00 } .layui-form-checked[lay-skin=primary] i { border-color: #ff8c00; background-color: #ff8c00 } .layui-form-onswitch { border-color: #ff8c00; background-color: #ff8c00 } .layui-form-radio > i:hover, .layui-form-radioed > i { color: #ff8c00 } .layui-table-edit:focus { border-color: #ff8c00 !important } .layui-nav-tree .layui-nav-itemed:after { background-color: #ff8c00 } .layui-nav-child dd.layui-this { background-color: #ff8c00 } .layui-nav .layui-nav-child dd.layui-this a { background-color: #ff8c00 } .layui-breadcrumb a:hover { color: #ff8c00 !important } .layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after { border-bottom: 2px solid #ff8c00 } .layui-tab-card > .layui-tab-more .layui-this { color: #ff8c00 } .layui-timeline-axis { color: #ff8c00 } .laydate-day-mark::after { background-color: #ff8c00 !important } .layui-laydate-header i:hover, .layui-laydate-header span:hover { color: #ff8c00 !important } .layui-laydate-footer span:hover { color: #ff8c00 !important } .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after { background-color: #ff8c00 !important } .layui-transfer-active .layui-btn { background-color: #ff8c00; border-color: #ff8c00; } .layui-form-checked[lay-skin=primary] i { border-color: #ff8c00!important; background-color: #ff8c00; } .layui-btn-normal{background-color: #ff8c00;} .layui-btn-warm{background-color: #393d49;} .layui-btn-danger{background-color: #FF5722;} .layui-btn-disabled,.layui-btn-disabled:hover,.layui-btn-disabled:active{background-color: #FBFBFB;}
+
+::-webkit-scrollbar{width: 10px; height: 10px;}
+::-webkit-scrollbar-button:vertical{display: none;}
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner{background-color: white;}
+::-webkit-scrollbar-thumb{border-radius: 10px; background-color: #e2e2e2;}
+::-webkit-scrollbar-thumb:vertical:hover{background-color: #e2e2e2;}
+::-webkit-scrollbar-thumb:vertical:active{background-color: #e2e2e2;}
+
+.eam-nav {
+    background-color:#2D93CA!important
+}
+
+.layui-form-label{
+    font-size: 12px;
+    height: 20px;
+    padding: 5px 8px;
+}
+.layui-input-block{
+    min-height: 32px;
+    margin-left: 96px;
+    font-size: 12px;
+}
+.layui-input-inline{
+    height: 30px;
+    line-height: 30px;
+}
+.layui-input{
+    font-size: 12px;
+    height: 30px;
+}
+
+.layui-inline{
+    height: 30px;
+}
+.layui-form-item{
+    margin-bottom: 5px;
+}
+.layui-table{
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+span{
+    font-size: 12px;
+    height: 30px;
+}
+
+.layui-table, .layui-table-view {
+    margin: 5px 0px;
+}
+
+
+.layui-form-switch {
+    margin-top: 0px;
+}
+
+.layui-textarea{
+    min-height: 70px;
+}
+.layui-table-tool {
+    min-height: 45px;
+    line-height: 30px;
+    padding: 10px 15px;
+}
+
+.layui-form-item .layui-inline{
+    margin-right: 0px !important;
+}
+#doSearch{
+    margin-left: 15px;
+}
