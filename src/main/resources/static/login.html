@@ -1,148 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>obsss登录</title>
+    <meta charset="utf-8">
+    <title>Obsss云盘登录</title>
     <script src="js/jQuery.js"></script>
-    <SCRIPT src="layui/layui.js"></SCRIPT>
-    <link rel="stylesheet" href="layui/css/layui.css">
-    <link rel="stylesheet" href="css/sss.css">
     <SCRIPT src="js/common.js"></SCRIPT>
     <SCRIPT src="js/login.js"></SCRIPT>
-    <style>
-        html{
-            height: 100%;
-        }
-        .layui-form-label{
-            width: 50px;
-        }
-
-        body{
-            background: url("img/login_bg.png") no-repeat center;
-            background-size: cover;
-            height: 100%;
-        }
-
-        .login-form{
-            background: url("img/login_input_bg.png") ;
-            background-size: 100%  100%;
-            width: 400px;
-            /*height: 600px;*/
-            position: absolute;
-            right: 20%;
-            top: 30%;
-        }
-
-        .login-input{
-            width: 200px;
-            background-color:transparent !important;
-            border: 0;
-            height: 40px;
-            line-height: 30px;
-        }
-
-        .box-username{
-            height: 38px;
-            width: 100%;
-            background:rgba(44,125,217,0.26);
-            border:1px solid rgba(37,131,240,.7);
-            border-radius:2px;
-        }
-        .box-username i{
-            margin-right: 5px;
-            float: left;
-        }
-        .box-username span{
-            float: left;
-            height: auto !important;
-        }
-
-        .box-username .layui-form-mid{
-            padding: 10px !important;
-            margin-right: 0 !important;
-        }
-
-        .layui-icon-ok {
-            background: url("img/login_input_00.png") no-repeat center;
-        }
-
-        .login-form-box .layui-form-item{
-            margin-bottom:10px;
-            padding: 0 20px;
-        }
-        .login-form-box .layui-inline{
-            width: 100%;
-        }
-
-
-        .layui-form-checkbox[lay-skin=primary] span {
-            font-size: 15px;
-            color: #0c70c3;
-        }
-
-        .jiayan-title{
-            text-align: center;
-            font-size:30px;
-            font-weight:normal;
-            color:rgba(57,201,255,1);
-        }
-        .login-content{
-            margin-top: 300px; margin-left: 700px;
-        }
-        .login-input{
-            color:#fff !important;
-        }
-
-        :-webkit-autofill,
-        :-webkit-autofill:hover,
-        :-webkit-autofill:focus,
-        :-webkit-autofill:active {
-            -webkit-text-fill-color: #2b739d !important;
-            transition: background-color 5000s ease-in-out 0s;
-        }
-    </style>
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <link rel="stylesheet" href="admin/css/pearForm.css" />
+    <link rel="stylesheet" href="admin/css/pearButton.css" />
+    <link rel="stylesheet" href="assets/login.css" />
 </head>
-<body >
-
-<div class="login-form"  style="padding: 30px">
-    <div class="">
-        <div class="grid-demo grid-demo-bg2">
-            <p class="jiayan-title">云盘系统</p>
+<body background="admin/images/background.svg" >
+<form class="layui-form" action="javascript:voidthem(0);">
+    <div class="layui-form-item">
+        <img class="logo" src="admin/images/logo.png" />
+        <div class="title">Obsss云盘</div>
+        <div class="desc">
+            Obs-Super-Star企业云盘系统
         </div>
-
-        <div style="height: 40px"></div>
     </div>
+    <div class="layui-form-item">
+        <input placeholder="请填写用户名" hover class="layui-input" />
+    </div>
+    <div class="layui-form-item">
+        <input type="password" placeholder="请填写密码" hover class="layui-input" />
+    </div>
+    <div class="layui-form-item">
+        <input type="checkbox" name="" title="记住密码" lay-skin="primary" checked>
+    </div>
+    <div class="layui-form-item">
+        <button style="background-color: #5FB878!important;" class="pear-btn pear-btn-primary login">
+            登 入
+        </button>
+    </div>
+</form>
+<script src="component/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'element','jquery'], function() {
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
 
-    <form class="layui-form login-form-box" lay-filter="loginForm">
-
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <div class="box-username">
-                    <div class="layui-form-mid layui-word-aux" ><i class="layui-icon layui-icon-username" style="font-size: 15px;color: #0c70c3"></i></div>
-                    <div class="layui-input-inline"><input type="text" name="userName" required  lay-verify="required" class="login-input" placeholder="请输入用户名"></div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <div class="box-username">
-                    <div class="layui-form-mid layui-word-aux" ><i class="layui-icon layui-icon-password" style="font-size: 15px;color: #0c70c3"></i></div>
-                    <div class="layui-input-inline"><input type="password" name="password" required  lay-verify="required" class="login-input" placeholder="请输入密码"></div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <input type="checkbox" name="" title="记住密码" lay-skin="primary" >
-        </div>
-        <div class="layui-form-item" style="text-align: center">
-            <div>
-                <button class="layui-btn layui-btn-fluid login-btn"  style="width: 100%; background-color: #32a0d2">登录</button>
-            </div>
-
-        </div>
-    </form>
-    <div style="height: 20px"></div>
-</div>
-
+        $("body").on("click",".login",function(){
+            location.href="index.html"
+        })
+    })
+</script>
 </body>
 </html>
