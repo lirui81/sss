@@ -1,0 +1,67 @@
+[{
+		"id": 1,
+		"title": "系统管理",
+		"icon": "layui-icon layui-icon-set-fill",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 3,
+			"title": "用户管理",
+			"icon": "layui-icon layui-icon-username",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/system/user.html"
+		},{
+			"id": 4,
+			"title": "角色管理",
+			"icon": "layui-icon layui-icon-user",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/system/role.html"
+		}]
+	},
+	{
+		"id": 2,
+		"title": "文件管理",
+		"icon": "layui-icon layui-icon-file",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": 5,
+				"title": "图片",
+				"icon": "layui-icon layui-icon-picture",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/common/basic/auth.html"
+				}, {
+					"id": 6,
+					"title": "文档",
+					"icon": "layui-icon layui-icon-form",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/common/basic/button.html"
+				}, {
+					"id": 7,
+					"title": "视频",
+					"icon": "layui-icon layui-icon-video",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/common/basic/button.html"
+				}, {
+					"id": 8,
+					"title": "音乐",
+					"icon": "layui-icon layui-icon-headset",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/common/basic/button.html"
+				}, {
+					"id": 9,
+					"title": "其他",
+					"icon": "layui-icon layui-icon-file-b",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/common/basic/button.html"
+				}
+		]
+	}
+]
