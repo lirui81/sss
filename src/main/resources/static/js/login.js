@@ -53,9 +53,7 @@ $(function () {
                         }else {
                             //弹出错误提示
                             var $ = layui.jquery, layer = layui.layer;
-                            layer.msg("用户名或密码错误！", {
-                                btn: ['确定']
-                            });
+                            layer.msg('用户名或密码错误，请重新输入！', {time: 3000, icon:5});
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
