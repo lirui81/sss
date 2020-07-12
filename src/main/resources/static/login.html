@@ -21,10 +21,10 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <input placeholder="请填写用户名" hover class="layui-input" />
+        <input id="userId" placeholder="请填写用户名" hover class="layui-input" />
     </div>
     <div class="layui-form-item">
-        <input type="password" placeholder="请填写密码" hover class="layui-input" />
+        <input id="password" type="password" placeholder="请填写密码" hover class="layui-input" />
     </div>
     <div class="layui-form-item">
         <input type="checkbox" name="" title="记住密码" lay-skin="primary" checked>
@@ -35,17 +35,8 @@
         </button>
     </div>
 </form>
-<script src="component/layui/layui.js"></script>
-<script>
-    layui.use(['form', 'element','jquery'], function() {
-        var form = layui.form;
-        var element = layui.element;
-        var $ = layui.jquery;
+<script src="component/layui/layui.js">
 
-        $("body").on("click",".login",function(){
-            location.href="index.html"
-        })
-    })
 </script>
 </body>
 </html>

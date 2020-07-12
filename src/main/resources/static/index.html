@@ -15,6 +15,10 @@
 		<link rel="stylesheet" href="admin/css/pearMenu.css" />
 		<!-- 主 题 更 换 -->
 		<style id="pearadmin-bg-color"></style>
+
+		<script src="js/jQuery.js"></script>
+		<SCRIPT src="js/common.js"></SCRIPT>
+<!--		<SCRIPT src="js/login.js"></SCRIPT>-->
 	</head>
 	<body class="layui-layout-body pear-admin">
 		<!-- 布 局 框 架 -->
@@ -30,9 +34,9 @@
 				<ul class="layui-nav layui-layout-right">
 <!--					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>-->
 <!--					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.cn" class="layui-icon layui-icon-website"></a></li>-->
-					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>
+<!--					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>-->
 					<li class="layui-nav-item" lay-unselect="">
-						<a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img">admin</a>
+						<a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img"><span id="userId"></span></a>
 						<dl class="layui-nav-child">
 							<dd><a href="javascript:;" class="pearson">个人信息</a></dd>
 <!--							<dd><a href="javascript:;">安全配置</a></dd>-->
@@ -47,7 +51,7 @@
 			<div class="layui-side layui-bg-black">
 				<!-- 顶 部 图 标 -->
 				<div class="layui-logo">
-					<img class="logo" src="admin/images/logo.png" />
+					<img src="admin/images/logo.png"/>
 					<span class="title"></span>
 				</div>
 				<!-- 侧 边 菜 单 -->
@@ -74,6 +78,7 @@
 		<!-- 依 赖 脚 本 -->
 		<script src="component/layui/layui.js"></script>
 		<script>
+			$("#userId").html(sessionStorage.getItem('userId'));
 			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
