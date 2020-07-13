@@ -32,13 +32,26 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> selectUsers(User user) {
-
         List<User> users = userMapper.selectUsersList(user);
         return users;
     }
     @Override
-    public void addUser(User user) {
-       userMapper.addUser(user);
+    public int addUser(User user) {
+        User user1=new User();
+        user1.setUserId(user.getUserId());
+        //判断用户名是否重复
+        List<User> users =userMapper.selectUsersList(user1);
+        if(users.size()<1){
+            try{
+                userMapper.addUser(user);
+                return 1;
+            }catch(Exception e){
+                e.printStackTrace();
+                return 0;
+            }
+        }else{
+            return 2;
+        }
     }
 
 }

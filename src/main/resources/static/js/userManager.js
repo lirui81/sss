@@ -23,7 +23,6 @@ $(function () {
                 //changeState(this.value,1);
             }
         });
-        form.render();
     })
 
 })
@@ -40,7 +39,7 @@ function getUserList() {
         user.role=$("#role").val();
     }
     if ($("#state").val() != "" && $("#state").val() != null){
-        user.userName=$("#state").val();
+        user.state=$("#state").val();
     }
     $.ajax({
         url: getRootPath() + "/users/selectUserList",

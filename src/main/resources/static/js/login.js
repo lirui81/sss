@@ -50,7 +50,7 @@ $(function () {
                         if (data.staus == true){
                             if(data.state==0){
                                 var $ = layui.jquery, layer = layui.layer;
-                                layer.msg('改账户已被禁用，请联系管理员！', {time: 3000, icon:5});
+                                layer.msg('改账户已被禁用，请联系管理员！', {time: 3000, icon:4});
                             }else{
                                 sessionStorage.setItem("userId",data.userId);//存储用户信息到session
                                 window.location.href = "index.html";
@@ -58,7 +58,7 @@ $(function () {
                         }else {
                             //弹出错误提示
                             var $ = layui.jquery, layer = layui.layer;
-                            layer.msg('用户名或密码错误，请重新输入！', {time: 3000, icon:5});
+                            layer.msg('用户名或密码错误，请重新输入！', {time: 3000, icon:2});
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
