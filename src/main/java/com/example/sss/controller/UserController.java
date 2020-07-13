@@ -14,12 +14,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/test")
-    public User cs() {
-        User user = userService.cs();
-        return user;
-    }
-
     /**
      * @param
      * @return

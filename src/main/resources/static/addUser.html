@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <link rel="stylesheet" href="../../../admin/css/pearCommon.css" />
+    <link rel="stylesheet" href="../../../component/layui/css/layui.css" />
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" lay-verify="required" autocomplete="off"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="realName" lay-verify="required" autocomplete="off"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="email" lay-verify="email" autocomplete="off"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="phone" lay-verify="phone" autocomplete="off"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="role" value="0" title="普通用户" checked>
+                        <input type="radio" name="role" value="1" title="管理员" >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-sm" lay-submit="" lay-filter="user-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="../../../component/layui/layui.js"></script>
+<script>
+    /**
+     * 获取根路径
+     * @returns
+     */
+    function getRootPath(){
+        var curPageUrl = window.document.location.href;
+        var rootPath = curPageUrl.split("//")[0] + "//" + curPageUrl.split("//")[1].split("/")[0];
+        return rootPath;
+    }
+
+    layui.use(['form','jquery'],function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        //自定义验证规则
+        form.verify({
+            required: function(value,elem){
+                if(!value){
+                    return '必填项不能为空！'
+                }
+            }
+        });
+        form.on('submit(user-save)', function(data){
+            var user=data.field;
+            user.password= pearHash.md5("123456");
+            user.state=1;
+            console.log(JSON.stringify(data.field));
+            $.ajax({
+                url: getRootPath() + "/users/add",
+                data:JSON.stringify(data.field),
+                dataType:'json',
+                contentType: 'application/json;charset=utf-8',
+                type:'post',
+                success:function(result){
+                    if(result.success){
+                        layer.msg("添加用户成功！",{icon:6,time:1000},function(){
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("user-table");
+                        });
+                    }else{
+                        layer.msg(result.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

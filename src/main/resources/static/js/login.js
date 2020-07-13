@@ -48,8 +48,13 @@ $(function () {
                     data: JSON.stringify(user),
                     success: function (data) {
                         if (data.staus == true){
-                            sessionStorage.setItem("userId",data.userId);//存储用户信息到session
-                            window.location.href = "index.html";
+                            if(data.state==0){
+                                var $ = layui.jquery, layer = layui.layer;
+                                layer.msg('改账户已被禁用，请联系管理员！', {time: 3000, icon:5});
+                            }else{
+                                sessionStorage.setItem("userId",data.userId);//存储用户信息到session
+                                window.location.href = "index.html";
+                            }
                         }else {
                             //弹出错误提示
                             var $ = layui.jquery, layer = layui.layer;

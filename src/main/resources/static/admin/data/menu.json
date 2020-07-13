@@ -10,7 +10,7 @@
 			"icon": "layui-icon layui-icon-username",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/system/user.html"
+			"href": "userManager.html"
 		},{
 			"id": 4,
 			"title": "角色管理",

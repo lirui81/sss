@@ -12,6 +12,25 @@ public class User {
     //接口请求状态
     private boolean staus;
 
+    private int curPage;//当前查询页
+    private int pageSize;//每页显示数据
+
+    public int getCurPage() {
+        return curPage;
+    }
+
+    public void setCurPage(int curPage) {
+        this.curPage = curPage;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     public boolean getStaus() {
         return staus;
     }
