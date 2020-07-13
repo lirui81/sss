@@ -28,8 +28,8 @@ public class ObsServiceImpl implements ObsService {
         obs.getObsClient().setBucketQuota(bucketName, quota);
     }
 
-    private String getBucketName(User user){
-        return "sss-"+user.getId().toString();
+    private String getBucketName(Integer id){
+        return "sss-"+id.toString();
     }
 
     /**
@@ -56,22 +56,22 @@ public class ObsServiceImpl implements ObsService {
 
     /**
     * description:创建桶，需要与用户绑定
-    * @param user 新创建的用户/或者仅仅需要他的主键ID？
+    * @param id 新创建的用户的主键ID？
     * @throws ObsException obs异常
     */
-    public void createBucket(User user) throws ObsException{
-        String bucketName=getBucketName(user);
+    public void createBucket(Integer id) throws ObsException{
+        String bucketName=getBucketName(id);
         HeaderResponse response=obs.getObsClient().createBucket(bucketName, Obs.getBucketLoc());
         setBucketQuota(bucketName,1024*1024*1024);
     }
 
     /**
     * description:在删除用户时连带要把他的桶也给删了
-    * @param user 要删除的用户
+    * @param id 要删除的用户id
      * @throws ObsException obs异常
     */
-    public void deleteBucket(User user) throws ObsException{
-        String bucketName =getBucketName(user);
+    public void deleteBucket(Integer id) throws ObsException{
+        String bucketName =getBucketName(id);
         if(headBucket(bucketName)) {
             obs.getObsClient().deleteBucket(bucketName);
         }
@@ -79,23 +79,23 @@ public class ObsServiceImpl implements ObsService {
 
     /**
     * description:获取桶的存量信息，主要包括已使用的空间大小以及桶包含的对象个数
-    * @param user 所属用户
+    * @param id 所属用户id
     * @return 桶存量信息/或者两个int（原本是long类型的）
     */
-    public BucketStorageInfo getBucketStorageInfo(User user){
+    public BucketStorageInfo getBucketStorageInfo(Integer id){
         //BucketStorageInfo storageInfo=obs.getObsClient().getBucketStorageInfo(getBucketName(user));
         //int number= (int) storageInfo.getObjectNumber();
         //int size= (int) storageInfo.getSize();
-        return obs.getObsClient().getBucketStorageInfo(getBucketName(user));
+        return obs.getObsClient().getBucketStorageInfo(getBucketName(id));
     }
 
     /**
     * description:获取存储桶元数据
-    * @param user 要查询桶的用户
+    * @param id 要查询桶的用户id
     * @return 桶元数据
     */
-    public BucketMetadataInfoResult getBucketMetadata(User user){
-        BucketMetadataInfoRequest request=new BucketMetadataInfoRequest(getBucketName(user));
+    public BucketMetadataInfoResult getBucketMetadata(Integer id){
+        BucketMetadataInfoRequest request=new BucketMetadataInfoRequest(getBucketName(id));
         request.setOrigin("http://www.a.com");//不懂意思
         return obs.getObsClient().getBucketMetadata(request);
     }

@@ -13,8 +13,8 @@ import com.obs.services.model.BucketStorageInfo;
  * @vertion： V1.0.1
  */
 public interface ObsService {
-    void createBucket(User user);
-    void deleteBucket(User user);
-    BucketStorageInfo getBucketStorageInfo(User user);
-    BucketMetadataInfoResult getBucketMetadata(User user);
+    void createBucket(Integer id);
+    void deleteBucket(Integer id);
+    BucketStorageInfo getBucketStorageInfo(Integer id);
+    BucketMetadataInfoResult getBucketMetadata(Integer id);
 }
