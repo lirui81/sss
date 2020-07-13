@@ -19,5 +19,5 @@ public interface UserService {
      * @return User
      *
      */
-    void addUser(User user);
+    int addUser(User user);
 }

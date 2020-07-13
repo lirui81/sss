@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <script src="js/jQuery.js"></script>
+    <script src="component/layui/layui.js"></script>
+
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>欢迎来到Obsss企业云盘---Obs-Super-Star企业云盘系统</legend>
+</fieldset>
+
+<div class="layui-carousel" id="test10" >
+    <div carousel-item="">
+        <div><img src="admin/images/1.png"></div>
+        <div><img src="admin/images/2.png"></div>
+        <div><img src="admin/images/3.png"></div>
+        <div><img src="admin/images/4.png"></div>
+        <div><img src="admin/images/5.png"></div>
+        <div><img src="admin/images/6.png"></div>
+        <div><img src="admin/images/7.png"></div>
+    </div>
+</div>
+<script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            ,width: '1120px'
+            ,height: '420px'
+            ,interval: 5000
+        });
+
+    });
+</script>
+</body>
+</html>
