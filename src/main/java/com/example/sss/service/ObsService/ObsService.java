@@ -1,6 +1,7 @@
 package com.example.sss.service.ObsService;
 
 import com.example.sss.model.domin.User;
+import com.obs.services.model.BucketMetadataInfoResult;
 import com.obs.services.model.BucketStorageInfo;
 
 /**
@@ -12,7 +13,8 @@ import com.obs.services.model.BucketStorageInfo;
  * @vertion： V1.0.1
  */
 public interface ObsService {
-    boolean createBucket(User user);
+    void createBucket(User user);
     void deleteBucket(User user);
     BucketStorageInfo getBucketStorageInfo(User user);
+    BucketMetadataInfoResult getBucketMetadata(User user);
 }
