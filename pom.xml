@@ -52,12 +52,24 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
+            <version>2.9.2</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
+            <version>2.9.2</version>
+        </dependency>
+        <!--分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+        <!--华为云SDK-->
+        <dependency>
+            <groupId>com.huaweicloud</groupId>
+            <artifactId>esdk-obs-java</artifactId>
+            <version>[3.19.7,)</version>
         </dependency>
 
 

@@ -10,7 +10,7 @@
 			"icon": "layui-icon layui-icon-username",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/system/user.html"
+			"href": "userManager.html"
 		},{
 			"id": 4,
 			"title": "角色管理",
@@ -36,7 +36,7 @@
 				}, {
 					"id": 6,
 					"title": "文档",
-					"icon": "layui-icon layui-icon-form",
+					"icon": "layui-icon .pear-iconzhangdan1",
 					"type": 1,
 					"openType": "_iframe",
 					"href": "view/common/basic/button.html"

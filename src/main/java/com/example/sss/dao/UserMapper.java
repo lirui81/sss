@@ -1,12 +1,17 @@
 package com.example.sss.dao;
 
-import com.example.sss.model.User;
+import com.example.sss.model.domin.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
- * Created by beyondLi on 2017/6/19.
+ *
  */
 @Repository
 public interface UserMapper {
     User selectUserByName(String name);
+    User login(User user);
+    List<User> selectUsersList(User user);
+    void addUser(User user);
 }
