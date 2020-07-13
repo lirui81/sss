@@ -16,7 +16,7 @@ import java.util.List;
  * @vertion： V1.0.1
  */
 public class ObsServiceImpl implements ObsService {
-    private static Obs obs;
+    private static final Obs obs=new Obs();
 
     /**
     * description:设置桶的配额
@@ -42,25 +42,27 @@ public class ObsServiceImpl implements ObsService {
     }
 
     /**
+     * description:获取到的桶列表将按照桶名字典顺序排列。
+     *          设置ListBucketsRequest.setQueryLocation参数为true后，可在列举桶时查询桶的区域位置。
+     * @return 桶列表
+     */
+    private List<ObsBucket> bucketList(){
+        ListBucketsRequest request=new ListBucketsRequest();
+        request.setQueryLocation(true);
+        return obs.getObsClient().listBuckets(request);
+    }
+
+    //----------------------public-----------------
+
+    /**
     * description:创建桶，需要与用户绑定
     * @param user 新创建的用户/或者仅仅需要他的主键ID？
     * @throws ObsException obs异常
     */
     public void createBucket(User user) throws ObsException{
         String bucketName=getBucketName(user);
-        HeaderResponse response=obs.getObsClient().createBucket(bucketName);
+        HeaderResponse response=obs.getObsClient().createBucket(bucketName, Obs.getBucketLoc());
         setBucketQuota(bucketName,1024*1024*1024);
-    }
-
-    /**
-    * description:获取到的桶列表将按照桶名字典顺序排列。
-     *          设置ListBucketsRequest.setQueryLocation参数为true后，可在列举桶时查询桶的区域位置。
-    * @return 桶列表
-    */
-    private List<ObsBucket> bucketList(){
-        ListBucketsRequest request=new ListBucketsRequest();
-        request.setQueryLocation(true);
-        return obs.getObsClient().listBuckets(request);
     }
 
     /**
@@ -97,5 +99,6 @@ public class ObsServiceImpl implements ObsService {
         request.setOrigin("http://www.a.com");//不懂意思
         return obs.getObsClient().getBucketMetadata(request);
     }
+
 
 }

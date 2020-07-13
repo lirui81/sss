@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Obs {
     //终端节点
-    private static String endPoint="http://obs.cn-north-4.myhuaweicloud.com";
+    private static String endPoint="obs.cn-north-4.myhuaweicloud.com";
     //地区
-    //private String bucketLoc;
+    private static String bucketLoc="cn-north-4";
     private static String ak="EKULOGFICWHYOCXNSLX9";
     private static String sk="u2kLfLE26xhslSH7sgSSsxc7zbULHYrpl6AZWbor";
     //OBS客户端（ObsClient）是访问OBS服务的
@@ -34,6 +34,7 @@ public class Obs {
         obsClient = new ObsClient(ak, sk, config);
     }
 
+
     private static void closeClient() {
         if (obsClient != null) {
             try {
@@ -43,6 +44,14 @@ public class Obs {
         }
     }
 
+    public static String getBucketLoc() {
+        return bucketLoc;
+    }
+
+    public static void setBucketLoc(String bucketLoc) {
+        Obs.bucketLoc = bucketLoc;
+    }
+
     public String getEndPoint() {
         return endPoint;
     }
@@ -50,14 +59,6 @@ public class Obs {
     public void setEndPoint(String endPoint) {
         Obs.endPoint = endPoint;
     }
-
-    /*public String getBucketLoc() {
-        return bucketLoc;
-    }
-
-    public void setBucketLoc(String bucketLoc) {
-        this.bucketLoc = bucketLoc;
-    }*/
 
     public String getAk() {
         return ak;
