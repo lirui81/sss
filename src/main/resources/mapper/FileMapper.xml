@@ -18,6 +18,11 @@
         path like concat(#{path},'%')
     </select>
 
+    <select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile">
+        select * from bos_file
+        while user_id=#{userId} and type=#{type}
+    </select>
+
     <insert id="addFile">
         insert into obs_file
             (file_name,file_state,make_time,path,size,type,user_id)

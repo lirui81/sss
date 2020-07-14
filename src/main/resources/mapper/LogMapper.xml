@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.sss.dao.LogMapper" >
+    <resultMap id="BaseResultMap" type="com.example.sss.model.domin.FileLog">
+        <id column="log_id" jdbcType="INTEGER" property="LogId"/>
+        <result column="file_id" jdbcType="INTEGER" property="fileId"/>
+        <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime"/>
+        <result column="operate_type" jdbcType="VARCHAR" property="operateType"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
+
+    <select id="selectLogByUserId"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.FileLog">
+        select * from bos_olg
+        while user_id=#{userId}
+    </select>
+
+    <insert id="addFile">
+        insert into obs_log
+            (file_id,operate_time,operate_type,user_id)
+            values (#{fileId},#{operateTime},#{operateType},#{userId})
+    </insert>
+
+</mapper>
