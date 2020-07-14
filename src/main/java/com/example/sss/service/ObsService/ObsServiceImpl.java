@@ -4,6 +4,9 @@ import com.example.sss.model.domin.Obs;
 import com.example.sss.model.domin.User;
 import com.obs.services.exception.ObsException;
 import com.obs.services.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,8 +18,12 @@ import java.util.List;
  * @date： 2020/7/12 19:20
  * @vertion： V1.0.1
  */
+@Transactional
+@Service
 public class ObsServiceImpl implements ObsService {
-    private static final Obs obs=new Obs();
+
+    @Autowired
+    static Obs obs=new Obs();
 
     /**
     * description:设置桶的配额
@@ -24,6 +31,7 @@ public class ObsServiceImpl implements ObsService {
      * @param size 配额大小
      */
     private void setBucketQuota(String bucketName,int size){
+
         BucketQuota quota=new BucketQuota(size);
         obs.getObsClient().setBucketQuota(bucketName, quota);
     }
@@ -46,7 +54,7 @@ public class ObsServiceImpl implements ObsService {
      *          设置ListBucketsRequest.setQueryLocation参数为true后，可在列举桶时查询桶的区域位置。
      * @return 桶列表
      */
-    private List<ObsBucket> bucketList(){
+    public List<ObsBucket> bucketList(){
         ListBucketsRequest request=new ListBucketsRequest();
         request.setQueryLocation(true);
         return obs.getObsClient().listBuckets(request);
@@ -60,6 +68,7 @@ public class ObsServiceImpl implements ObsService {
     * @throws ObsException obs异常
     */
     public void createBucket(Integer id) throws ObsException{
+        System.out.println(obs.getAk());
         String bucketName=getBucketName(id);
         HeaderResponse response=obs.getObsClient().createBucket(bucketName, Obs.getBucketLoc());
         setBucketQuota(bucketName,1024*1024*1024);

@@ -1,8 +1,10 @@
 package com.example.sss.model.utils;
 
+import com.example.sss.model.domin.Obs;
+
 import java.util.List;
 
-public class ObsPage<T> {
+public class ObsPage {
     private long total; // 总记录数
     private List data; // 返回每页的数据的集合
 
@@ -11,9 +13,8 @@ public class ObsPage<T> {
         this.total = total;
         this.data = data;
     }
-
-    public ObsPage() {
-
+    public ObsPage(){
+        super();
     }
     public long getTotal() {
         return total;

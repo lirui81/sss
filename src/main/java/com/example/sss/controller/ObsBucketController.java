@@ -1,8 +1,13 @@
 package com.example.sss.controller;
 
-import com.example.sss.model.util.ObsBucketOperation;
+import com.example.sss.service.ObsService.ObsService;
+import com.example.sss.service.ObsService.ObsServiceImpl;
 import com.obs.services.model.ObsBucket;
 import io.swagger.annotations.Api;
+import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,26 +19,22 @@ import java.util.List;
 @Api(tags = "Obs桶接口")
 @RequestMapping("/ObsBucket")
 @RestController
-
+@Transactional
+@Service
 public class ObsBucketController {
-
-    private ObsBucketOperation obsBucketOperation=new ObsBucketOperation();
+    @Autowired
+    private ObsService obsService;
     /**
      * @param
      * @return
      */
     @RequestMapping(value="/CreateObsBucket",method= RequestMethod.POST)
-    public int testCreateBucket(@RequestBody String bucketName) throws IOException {
-        return obsBucketOperation.createBucket(bucketName);
-    }
-
-    @RequestMapping(value="/GetAllBucket",method= RequestMethod.POST)
-    public List<ObsBucket> getAllBucket() throws IOException {
-        return obsBucketOperation.getAllBucket();
+    public void testcreateBucket(@RequestBody Integer id) throws IOException {
+        obsService.createBucket(id);
     }
 
     @RequestMapping(value="/RemoveBucket",method= RequestMethod.POST)
-    public int removeBucket(@RequestBody String bucketName) throws IOException {
-        return obsBucketOperation.removeBucket(bucketName);
+    public void testdeleteBucket(@RequestBody Integer id) throws IOException {
+        obsService.deleteBucket(id);
     }
 }
