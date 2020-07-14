@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全部文件</title>
+    <script src="js/jQuery.js"></script>
+    <SCRIPT src="component/layui/layui.js"></SCRIPT>
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <script src="js/allFilesManager.js"></script>
+
+</head>
+<body style="padding-top: 20px">
+<div>
+    <form class="layui-form">
+        <!--<div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-input-inline" >
+                    <input class="layui-input " id="filename" type="text" placeholder="搜索你的文件"  >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-sm" onclick="getAllFilesList()">
+                        <i class="layui-icon layui-icon-search"></i>查询</a>
+                </div>
+            </div>
+        </div>-->
+    </form>
+
+</div>
+
+<table class="layui-table" lay-filter="allFilesDemo" id="allFilesTable" style="height: 100%; width: 100%">
+
+</table>
+
+<div id="allFilesTable_page"></div>
+
+
+</body>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-xs" onclick="showAddWin()"><i class="layui-icon layui-icon-upload"></i>上传</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" onclick="addUsers()"><i class="layui-icon layui-icon-download-circle"></i>下载</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs">复制到</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs">移动到</a>
+    </div>
+</script>
+</html>
