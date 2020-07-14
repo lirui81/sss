@@ -1,7 +1,6 @@
 package com.example.sss.service.ObsService;
 
-import com.example.sss.model.domin.Obs;
-import com.example.sss.model.domin.User;
+import com.example.sss.model.utils.Obs;
 import com.obs.services.exception.ObsException;
 import com.obs.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ public class ObsServiceImpl implements ObsService {
     static Obs obs=new Obs();
 
     /**
-    * description:设置桶的配额
-    * @param bucketName 桶名
+     * description:设置桶的配额
+     * @param bucketName 桶名
      * @param size 配额大小
      */
     private void setBucketQuota(String bucketName,int size){

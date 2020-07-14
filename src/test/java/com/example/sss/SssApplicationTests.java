@@ -1,12 +1,6 @@
 package com.example.sss;
 
-import com.example.sss.model.domin.Obs;
-import com.example.sss.model.domin.User;
-import com.example.sss.service.ObsService.ObsService;
-import com.example.sss.service.ObsService.ObsServiceImpl;
-import com.obs.services.exception.ObsException;
-import com.obs.services.model.BucketMetadataInfoResult;
-import com.obs.services.model.BucketStorageInfo;
+import com.example.sss.service.FlileService.FileServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,8 +11,4 @@ class SssApplicationTests {
     void contextLoads() {
     }
 
-    @Test
-    void obsService(){
-
-    }
 }

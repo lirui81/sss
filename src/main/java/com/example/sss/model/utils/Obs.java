@@ -1,10 +1,9 @@
-package com.example.sss.model.domin;
+package com.example.sss.model.utils;
 
 import com.obs.services.ObsClient;
 import com.obs.services.ObsConfiguration;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Title:OBS服务器
@@ -35,7 +34,7 @@ public class Obs {
     }
 
 
-    private static void closeClient() {
+    public static void closeClient() {
         if (obsClient != null) {
             try {
                 obsClient.close();

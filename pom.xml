@@ -65,14 +65,6 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
-        <!--华为云SDK-->
-        <dependency>
-            <groupId>com.huaweicloud</groupId>
-            <artifactId>esdk-obs-java</artifactId>
-            <version>[3.19.7,)</version>
-        </dependency>
-
-
         <!--OBS -->
         <dependency>
             <groupId>com.huaweicloud</groupId>
