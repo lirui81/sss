@@ -3,58 +3,15 @@ var pageSize="10";
 
 $(function () {
     //获取表格数据
-    getUserList();
-    layui.use('form', function () {
-        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-        //监听开关操作
-        form.on('switch(state)', function(obj){
-            if(obj.elem.checked==false){
-                changeState(parseInt(this.value),0);
-            }else{
-                changeState(parseInt(this.value),1);
-            }
-        });
-    })
+    getAllFilesList();
 
 })
 /**
- * 修改用户状态
- */
-function changeState(id,state) {
-    var user={};
-    user.id=id;
-    user.state=state;
-    $.ajax({
-        url: sessionStorage.getItem("rootPath") + "/users/changeState",
-        data:JSON.stringify(user),
-        dataType:'json',
-        contentType: 'application/json;charset=utf-8',
-        type:'post',
-        success:function(res){
-            layer.msg("修改状态成功！",{icon:1,time:1000});
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            layer.msg("修改状态失败！" ,{icon:2,time:1000});
-            console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
-        }
-    })
-}
-/**
  * 后台返回数据填充表格 demo
  */
-function getUserList() {
-    var user={};
-    if ($("#userName").val() != "" && $("#userName").val() != null){
-        user.userName=$("#userName").val();
-    }
-    if ($("#role").val() != "" && $("#role").val() != null){
-        user.role=$("#role").val();
-    }
-    if ($("#state").val() != "" && $("#state").val() != null){
-        user.state=$("#state").val();
-    }
+function getAllFilesList() {
     $.ajax({
-        url: sessionStorage.getItem("rootPath")+ "/users/selectUserList",
+        url: rootPath + "/users/selectUserList",
         method: "post",
         dataType: "json",
         contentType: 'application/json;charset=utf-8',
@@ -134,7 +91,7 @@ function renderTable(data) {
  */
 function deleteUser(id) {
     $.ajax({
-        url:sessionStorage.getItem("rootPath") + "/users/deleteUser",
+        url: rootPath + "/users/deleteUser",
         data:JSON.stringify(id),
         dataType:'json',
         contentType: 'application/json;charset=utf-8',
@@ -192,11 +149,4 @@ function showAddWin() {
             content: 'addUser.html'
         });
     });
-}
-/**
- * 批量导入
- */
-function addUsers() {
-    layer.msg('玩命开发中...');
-    window.location.href = "";
 }

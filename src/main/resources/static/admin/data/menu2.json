@@ -11,7 +11,7 @@
       "icon": "layui-icon layui-icon-file-b",
       "type": 1,
       "openType": "_iframe",
-      "href": "view/common/basic/auth.html"
+      "href": "allFilesManager.html"
     },
       {
         "id": 3,

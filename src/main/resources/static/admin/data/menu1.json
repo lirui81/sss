@@ -32,16 +32,15 @@
 			"icon": "layui-icon layui-icon-file-b",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/common/basic/auth.html"
-		},
-			{
+			"href": "allFilesManager.html"
+			},{
 				"id": 6,
 				"title": "图片",
 				"icon": "layui-icon layui-icon-picture",
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/common/basic/auth.html"
-				},{
+				}, {
 					"id": 7,
 					"title": "文档",
 					"icon": "layui-icon .pear-iconzhangdan1",
