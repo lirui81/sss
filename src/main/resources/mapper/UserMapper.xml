@@ -21,6 +21,11 @@
         set state=#{state}
         where id=#{id}
     </update>
+    <update id="uppsw">
+        update obs_user
+        set password=#{password}
+        where user_id=#{userId}
+    </update>
     <delete id="deleteUserById">
         delete from obs_user
         where id=#{id}

@@ -55,6 +55,7 @@
 <script>
    layui.use(['pearHash','form'],function () {
        var form = layui.form, layer = layui.layer;
+       var pearHash = layui.pearHash;
        $("body").on("click",".layui-btn",function(){
            if ($("#newPassword").val()!=$("#newPassword").val())
                layer.msg("两次密码不一致")
@@ -67,6 +68,7 @@
                    sessionStorage.setItem('password',$("#newPassword").val())
                    user.userId=sessionStorage.getItem('userId')
                    user.password=sessionStorage.getItem('password')
+                   console.info(password)
                    $.ajax({
                        url: "127.0.0.1:8080"+ "/person/uppsw",
                        method: "post",
@@ -74,22 +76,12 @@
                        contentType: 'application/json;charset=utf-8',
                        data: JSON.stringify(user),
                        success: function (data) {
-                           if (data.staus == true){
-                               sessionStorage.setItem("userId",data.userId);//存储用户信息到session
-                               sessionStorage.setItem("userName",data.userName);//存储用户信息到session
-                               sessionStorage.setItem("email",data.email);//存储用户信息到session
-                               sessionStorage.setItem("phoneNum",data.phoneNum);//存储用户信息到session
-                               if(data.role==1)
-                                   window.location.href="index.html";
-                               else
-                                   window.location.href = "com_index.html";
-                           }else {
-                               //弹出错误提示
-                               var $ = layui.jquery, layer = layui.layer;
-                               layer.msg('用户名或密码错误，请重新输入！', {time: 3000, icon:5});
-                           }
+                           layer.msg("改密成功！",{icon:1,time:1000},function(){
+                               parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                           });
                        },
                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                           layer.msg("改密失败！",{icon:2,time:1000});
                            console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
                        }
                    })

@@ -29,6 +29,13 @@ public interface UserService {
      */
     void changeState(User user);
     /**
+     * 修改用户密码
+     * @param user
+     * @return User
+     *
+     */
+    void uppsw(User user);
+    /**
      * 删除用户
      * @param id
      * @return User

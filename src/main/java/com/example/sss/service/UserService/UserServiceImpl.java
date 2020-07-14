@@ -65,6 +65,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void uppsw(User user) {
+        userMapper.uppsw(user);
+    }
+
+    @Override
     public void deleteUser(Integer id) {
         userMapper.deleteUserById(id);
         //删除该用户的桶

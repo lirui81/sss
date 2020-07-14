@@ -16,5 +16,6 @@ public interface UserMapper {
     List<User> selectUsersList(User user);
     void addUser(User user);
     void updateState(User user);
+    void uppsw(User user);
     void deleteUserById(Integer id);
 }
