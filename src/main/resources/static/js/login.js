@@ -49,7 +49,13 @@ $(function () {
                     success: function (data) {
                         if (data.staus == true){
                             sessionStorage.setItem("userId",data.userId);//存储用户信息到session
-                            window.location.href = "index.html";
+                            sessionStorage.setItem("userName",data.userName);//存储用户信息到session
+                            sessionStorage.setItem("email",data.email);//存储用户信息到session
+                            sessionStorage.setItem("phoneNum",data.phoneNum);//存储用户信息到session
+                            if(data.role==1)
+                                window.location.href="index.html";
+                            else
+                                window.location.href = "com_index.html";
                         }else {
                             //弹出错误提示
                             var $ = layui.jquery, layer = layui.layer;
