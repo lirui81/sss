@@ -51,6 +51,7 @@ $(function () {
                                 var $ = layui.jquery, layer = layui.layer;
                                 layer.msg('您的账户已被禁用，如有疑问请联系管理员！', {time: 3000, icon:4});
                             }else{
+                                sessionStorage.setItem("id",data.id);//存储用户信息到session
                                 sessionStorage.setItem("userId",data.userId);//存储用户信息到session
                                 sessionStorage.setItem("password",data.password);//存储用户信息到session
                                 sessionStorage.setItem("userName",data.userName);//存储用户信息到session

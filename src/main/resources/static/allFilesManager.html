@@ -10,24 +10,28 @@
 
 </head>
 <body style="padding-top: 20px">
-<div>
-    <form class="layui-form">
-        <!--<div class="layui-form-item">
-            <div class="layui-inline">
-                <div class="layui-input-inline" >
-                    <input class="layui-input " id="filename" type="text" placeholder="搜索你的文件"  >
-                </div>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <div class="layui-input-inline" >
+                <button type="button" class="layui-btn" onclick="uplaod()"><i class="layui-icon"></i>上传文件</button>
             </div>
-            <div class="layui-inline">
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-sm" onclick="getAllFilesList()">
-                        <i class="layui-icon layui-icon-search"></i>查询</a>
-                </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline" >
+                <input class="layui-input " id="filename" type="text" placeholder="搜索你的文件"  >
             </div>
-        </div>-->
-    </form>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-sm" onclick="getAllFilesList()">
+                    <i class="layui-icon layui-icon-search"></i>查询</a>
+            </div>
+        </div>
+    </div>
+</form>
 
-</div>
+
 
 <table class="layui-table" lay-filter="allFilesDemo" id="allFilesTable" style="height: 100%; width: 100%">
 
@@ -44,5 +48,20 @@
         <a class="layui-btn layui-btn-primary layui-btn-xs">复制到</a>
         <a class="layui-btn layui-btn-primary layui-btn-xs">移动到</a>
     </div>
+</script>
+<script>
+    function uplaod(){
+        layui.use('layer', function(){
+            var $ = layui.jquery,layer = layui.layer;
+            layer.open({
+                type: 2 //Page层类型
+                ,area: ['700px', '400px']
+                ,title: '文件选择'
+                ,shade: 0.6 //遮罩透明度
+                ,maxmin: true //允许全屏最小化
+                ,content: 'uplaod.html'
+            });
+        });
+    }
 </script>
 </html>
