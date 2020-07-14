@@ -18,15 +18,36 @@ $(function () {
         //监听开关操作
         form.on('switch(state)', function(obj){
             if(obj.elem.checked==false){
-                //changeState(this.value,0);
+                changeState(parseInt(this.value),0);
             }else{
-                //changeState(this.value,1);
+                changeState(parseInt(this.value),1);
             }
         });
     })
 
 })
-
+/**
+ * 修改用户状态
+ */
+function changeState(id,state) {
+    var user={};
+    user.id=id;
+    user.state=state;
+    $.ajax({
+        url: getRootPath() + "/users/changeState",
+        data:JSON.stringify(user),
+        dataType:'json',
+        contentType: 'application/json;charset=utf-8',
+        type:'post',
+        success:function(res){
+            layer.msg("修改状态成功！",{icon:1,time:1000});
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("修改状态失败！" ,{icon:2,time:1000});
+            console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
+        }
+    })
+}
 /**
  * 后台返回数据填充表格 demo
  */
@@ -92,15 +113,14 @@ function renderTable(data) {
                 , {field: 'phoneNum', title: '电话'}
                 , {field: 'state', title: '状态', sort: true,templet:function (data) {
                         if(data.state==1){
-                            return  '<input type="checkbox" value="'+data.id+' checked="" lay-filter="state" lay-skin="switch" lay-filter="switchTest" lay-text="使用|禁用">';
+                            return  '<input type="checkbox" value="'+data.id+'" checked="" lay-filter="state" lay-skin="switch" lay-filter="switchTest" lay-text="使用|禁用">';
                         }else if(data.state==0){
-                            return '<input type="checkbox" value="'+data.id+' lay-filter="state" lay-skin="switch" lay-text="使用|禁用">';
+                            return '<input type="checkbox" value="'+data.id+'" lay-filter="state" lay-skin="switch" lay-text="使用|禁用">';
                         }
                     }}
                 , {fixed: 'right', title: '操作',templet:function (data) {
                         var btns = "";
-                            btns += ' <a class="layui-btn layui-btn-xs " lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>';
-                            btns += ' <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>查看</a>';
+                            btns += ' <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</a>';
                         return btns;
                     }}
             ]]
@@ -109,19 +129,35 @@ function renderTable(data) {
         //监听行工具事件
         table.on('tool(usersDemo)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'edit') {
-                showDefectMessage(data);
-            }else if (obj.event === 'delete'){
+            if (obj.event === 'delete'){
                 layer.confirm('真的删除该用户吗？', function(index){
                     obj.del();
-                    //deleteUser(data.id);
+                    deleteUser(data.id);
                     layer.close(index);
                 });
             }
         });
     });
 }
-
+/**
+ * 删除用户
+ */
+function deleteUser(id) {
+    $.ajax({
+        url: getRootPath() + "/users/deleteUser",
+        data:JSON.stringify(id),
+        dataType:'json',
+        contentType: 'application/json;charset=utf-8',
+        type:'post',
+        success:function(res){
+            layer.msg("删除用户成功！",{icon:1,time:1000});
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg("删除用户失败！" ,{icon:2,time:1000});
+            console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
+        }
+    })
+}
 /**
  * 分页
  */
@@ -159,6 +195,7 @@ function showAddWin() {
         layer.open({
             type: 2,
             title: '新增用户',
+            skin: 'layui-layer-molv', //样式类名
             shade: 0.8,
             shadeClose:false,
             area: ['50%', '70%'],
@@ -166,28 +203,9 @@ function showAddWin() {
         });
     });
 }
-
 /**
- * 弹窗查看、编辑
+ * 批量导入
  */
-function showDefectMessage(data) {
-    layui.use('layer', function () { //独立版的layer无需执行这一句
-        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-        layer.open({
-            type: 2,
-            title: '缺陷详情',
-            shadeClose: false,
-            skin: 'layui-layer-lan',
-            shade: 0.8,
-            area: ['65%', '90%'],
-            content: 'defectMessage.html',
-            success: function (layero, index) {
-                var body = layui.layer.getChildFrame('body', index);
-                //获取新窗口对象
-                var iframeWindow = layero.find('iframe')[0].contentWindow;
-                //父页面传下拉框的选择值，然后显示
-                iframeWindow.child(data.defectCode);
-            }
-        });
-    })
+function addUsers() {
+    layer.msg('玩命开发中...');
 }

@@ -50,7 +50,7 @@ $(function () {
                         if (data.staus == true){
                             if(data.state==0){
                                 var $ = layui.jquery, layer = layui.layer;
-                                layer.msg('改账户已被禁用，请联系管理员！', {time: 3000, icon:4});
+                                layer.msg('您的账户已被禁用，如有疑问请联系管理员！', {time: 3000, icon:4});
                             }else{
                                 sessionStorage.setItem("userId",data.userId);//存储用户信息到session
                                 window.location.href = "index.html";

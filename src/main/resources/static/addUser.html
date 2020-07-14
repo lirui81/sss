@@ -101,7 +101,7 @@
                 success:function(res){
                     if(res==1){
                         layer.msg("添加用户成功！",{icon:1,time:1000},function(){
-                            parent.layui.table.reload("usersDemo");
+                            parent.location.reload();
                             parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
                         });
                     }else if(res==2){
@@ -111,7 +111,6 @@
                     }
                 }
             })
-            return false;
         });
     })
 </script>
