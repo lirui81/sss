@@ -11,6 +11,20 @@
         <result column="phone_num" jdbcType="VARCHAR" property="phoneNum"/>
         <result column="state" jdbcType="VARCHAR" property="state"/>
     </resultMap>
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.sss.model.domin.User">
+        insert into obs_user
+            (user_id,user_name,password,role,email,phone_num,state)
+            values (#{userId},#{userName},#{password},#{role},#{email},#{phoneNum},#{state})
+    </insert>
+    <update id="updateState">
+        update obs_user
+        set state=#{state}
+        where id=#{id}
+    </update>
+    <delete id="deleteUserById">
+        delete from obs_user
+        where id=#{id}
+    </delete>
     <select id="selectUserByName" resultMap="BaseResultMap">
         SELECT * FROM obs_user WHERE user_name = #{name}
     </select>
@@ -19,6 +33,34 @@
         SELECT * FROM obs_user
         WHERE user_id = #{userId}
             and password = #{password}
+    </select>
+    <select id="selectUsersList"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.User">
+        SELECT * FROM obs_user
+        WHERE 1 = 1
+        <if test="id != null">
+            and id=#{id}
+        </if>
+        <if test="state != null">
+            and state=#{state}
+        </if>
+        <if test="userName != null">
+            and user_name=#{userName}
+        </if>
+        <if test="userId != null">
+            and user_id=#{userId}
+        </if>
+        <if test="password != null">
+            and password=#{password}
+        </if>
+        <if test="role != null">
+            and role=#{role}
+        </if>
+        <if test="email != null">
+            and email=#{email}
+        </if>
+        <if test="phoneNum != null">
+            and phone_num=#{phoneNum}
+        </if>
     </select>
 
 </mapper>

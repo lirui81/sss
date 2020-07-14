@@ -48,18 +48,23 @@ $(function () {
                     data: JSON.stringify(user),
                     success: function (data) {
                         if (data.staus == true){
-                            sessionStorage.setItem("userId",data.userId);//存储用户信息到session
-                            sessionStorage.setItem("userName",data.userName);//存储用户信息到session
-                            sessionStorage.setItem("email",data.email);//存储用户信息到session
-                            sessionStorage.setItem("phoneNum",data.phoneNum);//存储用户信息到session
-                            if(data.role==1)
-                                window.location.href="index.html";
-                            else
-                                window.location.href = "com_index.html";
+                            if(data.state==0){
+                                var $ = layui.jquery, layer = layui.layer;
+                                layer.msg('您的账户已被禁用，如有疑问请联系管理员！', {time: 3000, icon:4});
+                            }else{
+                                sessionStorage.setItem("userId",data.userId);//存储用户信息到session
+                                sessionStorage.setItem("userName",data.userName);//存储用户信息到session
+                                sessionStorage.setItem("email",data.email);//存储用户信息到session
+                                sessionStorage.setItem("phoneNum",data.phoneNum);//存储用户信息到session
+                                if(data.role==1)
+                                    window.location.href="index.html";
+                                else
+                                    window.location.href = "com_index.html";
+                            }
                         }else {
                             //弹出错误提示
                             var $ = layui.jquery, layer = layui.layer;
-                            layer.msg('用户名或密码错误，请重新输入！', {time: 3000, icon:5});
+                            layer.msg('用户名或密码错误，请重新输入！', {time: 3000, icon:2});
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {

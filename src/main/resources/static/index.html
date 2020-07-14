@@ -27,7 +27,7 @@
 				<!-- 顶 部 左 侧 功 能 -->
 				<ul class="layui-nav layui-layout-left">
 <!--					<li class="collaspe layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>-->
-<!--					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1"></a></li>-->
+					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1"></a></li>
 				</ul>
 				<!-- 顶 部 右 侧 菜 单 -->
 				<div id="control" class="layui-layout-control"></div>
@@ -36,7 +36,7 @@
 <!--					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.cn" class="layui-icon layui-icon-website"></a></li>-->
 <!--					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>-->
 					<li class="layui-nav-item" lay-unselect="">
-						<a href="javascript:"><img src="admin/images/avatar.jpg" class="layui-nav-img"><span id="userId"></span></a>
+						<a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img"><span id="userId"></span></a>
 						<dl class="layui-nav-child">
 							<dd><a href="info.html">个人信息</a></dd>
 							<dd><a href="uppsw.html">修改密码</a></dd>
@@ -72,9 +72,9 @@
         <!-- 聊 天 组 件 -->
 <!--		<div id="social" class="layui-hide-xs"></div>-->
         <!-- 收 缩 适 配 -->
-<!--		<div class="collaspe pe-collaspe layui-hide-sm">-->
-<!--			<i class="layui-icon layui-icon-shrink-right"></i>-->
-<!--		</div>-->
+		<div class="collaspe pe-collaspe layui-hide-sm">
+			<i class="layui-icon layui-icon-shrink-right"></i>
+		</div>
 		<!-- 依 赖 脚 本 -->
 		<script src="component/layui/layui.js"></script>
 		<script>
@@ -90,8 +90,8 @@
 					keepLoad: 2000, // 主 页 加 载 过 度 时 长 可为 false
 					muiltTab: true, // 是 否 开 启 多 标 签 页 true 开启 false 关闭
 					control: false, // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
-					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
-					index: 'view/console/console1.html', // 默 认 加 载 主 页
+					theme: "dark-theme", // 默 认 主 题
+					index: 'console.html', // 默 认 加 载 主 页
 					data: 'admin/data/menu1.json', // 菜 单 数 据 加 载 地 址
 					select: '0', // 默 认 选 中 菜 单 项
 					notice: 'admin/data/notice.json', // 消 息 列 表 数 据
