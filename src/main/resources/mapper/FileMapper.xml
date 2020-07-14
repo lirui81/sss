@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.sss.dao.FileMapper" >
+    <resultMap id="BaseResultMap" type="com.example.sss.model.domin.ObsFile">
+        <id column="file_id" jdbcType="INTEGER" property="fileId"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="file_state" jdbcType="INTEGER" property="fileState"/>
+        <result column="make_time" jdbcType="DATETIME" property="makeTime"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="size" jdbcType="VARCHAR" property="size"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
+
+    <select id="selectFileListByPath"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile">
+        SELECT * FROM obs_file
+        where user_id=#{userId} and
+        path like concat(#{path},'%')
+    </select>
+
+    <insert id="addFile">
+        insert into obs_file
+            (file_name,file_state,make_time,path,size,type,user_id)
+            values (#{fileName},#{fileState},#{makeTime},#{path},#{size},#{type},#{userId})
+    </insert>
+
+    <delete id="deleteFile">
+        delete from obs_file
+        where user_id=#{userId} and path=#{path}
+    </delete>
+
+    <update id="updateFileName">
+        update obs_file set
+        file_name=#{newName},path=#{newPath}
+        where user_id=#{userId} and path=#{path}
+    </update>
+
+    <update id="updateFilePath">
+        update obs_file set
+        path=#{newPath}
+        where user_id=#{userId} and path=#{oldPath}
+    </update>
+
+</mapper>
