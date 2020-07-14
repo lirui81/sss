@@ -1,6 +1,5 @@
 package com.example.sss.model.utils;
 
-import com.example.sss.model.domin.Obs;
 
 import java.util.List;
 

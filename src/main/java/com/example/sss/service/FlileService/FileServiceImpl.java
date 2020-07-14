@@ -1,6 +1,8 @@
 package com.example.sss.service.FlileService;
 
 import com.example.sss.dao.FileMapper;
+import com.example.sss.dao.LogMapper;
+import com.example.sss.model.domin.FileLog;
 import com.example.sss.model.domin.ObsFile;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +30,21 @@ public class FileServiceImpl implements FileService{
         return path.endsWith("/");
     }
 
+    /**
+    * description:统计从index开始的 '/' 字符数量
+    * @param str 被统计字符串
+    * @param index 开始位置
+    * @return '/' 的数量
+    */
+    private int count(String str,int index){
+        int count=0;
+        for(int i=index;i<str.length();i++){
+            if (str.charAt(i)=='/'){
+                ++count;
+            }
+        }
+        return count;
+    }
 
     //---------------------public---------------
 
@@ -42,15 +59,31 @@ public class FileServiceImpl implements FileService{
         if (isDir(path)) {
             List<ObsFile> list = fileMapper.selectFileListByPath(userId, path);
             for(ObsFile item:list){
-                if (item.getPath().equals(path)){
+                int count=count(item.getPath(), path.length());
+                //把path移除掉
+                if(isDir(item.getPath())&&count==0){
                     list.remove(item);
-                    break;
+                }else{
+                    //子文件夹下面的也移除掉
+                    if (count!=0){
+                        list.remove(item);
+                    }
                 }
             }
             return list;
         }
-        else
-            return null;
+        else return null;
+    }
+
+    /**
+    * description:根据类型获取文件列表
+     * @param userId 用户id
+     * @param type 文件类型
+     * @return 该类型的所有文件
+    */
+    @Override
+    public List<ObsFile> selectFileListByType(Integer userId, String type){
+        return fileMapper.selectFileListByType(userId, type);
     }
 
     /**
@@ -63,7 +96,7 @@ public class FileServiceImpl implements FileService{
     }
 
     /**
-    * description:向数据库删除文件的信息
+    * description:从数据库删除文件
     * @param userId 用户id
     * @param path 文件的的路径
     */

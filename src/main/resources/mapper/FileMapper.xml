@@ -5,7 +5,7 @@
         <id column="file_id" jdbcType="INTEGER" property="fileId"/>
         <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
         <result column="file_state" jdbcType="INTEGER" property="fileState"/>
-        <result column="make_time" jdbcType="DATETIME" property="makeTime"/>
+        <result column="make_time" jdbcType="TIMESTAMP" property="makeTime"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="size" jdbcType="VARCHAR" property="size"/>
         <result column="type" jdbcType="VARCHAR" property="type"/>
@@ -16,6 +16,11 @@
         SELECT * FROM obs_file
         where user_id=#{userId} and
         path like concat(#{path},'%')
+    </select>
+
+    <select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile">
+        select * from bos_file
+        while user_id=#{userId} and type=#{type}
     </select>
 
     <insert id="addFile">

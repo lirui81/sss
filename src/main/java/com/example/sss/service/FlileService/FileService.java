@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface FileService {
     List<ObsFile> selectFileListByPath(Integer userId, String path);
+    List<ObsFile> selectFileListByType(Integer userId, String type);
     void addFile(ObsFile file);
     void deleteFile(Integer userId,String path);
     void updateFileName(Integer userId,String path,String newName);
