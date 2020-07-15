@@ -7,33 +7,29 @@
     <SCRIPT src="component/layui/layui.js"></SCRIPT>
     <link rel="stylesheet" href="component/layui/css/layui.css" />
     <script src="js/allFilesManager.js"></script>
-
+    <link rel="stylesheet" href="admin/css/pear-icon/demo.css">
+    <link rel="stylesheet" href="admin/css/pear-icon/iconfont.css">
 </head>
 <body style="padding-top: 20px">
 <form class="layui-form">
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <div class="layui-input-inline" >
-                <button type="button" class="layui-btn" onclick="uplaod()"><i class="layui-icon"></i>上传文件</button>
-            </div>
-        </div>
-        <div class="layui-inline">
-            <div class="layui-input-inline" >
-                <input class="layui-input " id="filename" type="text" placeholder="搜索你的文件"  >
-            </div>
-        </div>
-        <div class="layui-inline">
+        <div style="text-align: right">
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-sm" onclick="getAllFilesList()">
-                    <i class="layui-icon layui-icon-search"></i>查询</a>
+                <div class="layui-input-inline" >
+                    <input class="layui-input " id="filename" type="text" placeholder="搜索你的文件"  >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-sm" onclick="getFilesList()">
+                        <i class="layui-icon layui-icon-search"></i>查询</a>
+                </div>
             </div>
         </div>
     </div>
 </form>
 
-
-
-<table class="layui-table" lay-filter="allFilesDemo" id="allFilesTable" style="height: 100%; width: 100%">
+<table class="layui-table" lay-filter="allFilesDemo" lay-size="sm" id="allFilesTable" style="height: 100%; width: 100%">
 
 </table>
 
@@ -43,10 +39,11 @@
 </body>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-xs" onclick="showAddWin()"><i class="layui-icon layui-icon-upload"></i>上传</a>
-        <a class="layui-btn layui-btn-primary layui-btn-xs" onclick="addUsers()"><i class="layui-icon layui-icon-download-circle"></i>下载</a>
-        <a class="layui-btn layui-btn-primary layui-btn-xs">复制到</a>
-        <a class="layui-btn layui-btn-primary layui-btn-xs">移动到</a>
+        <a class="layui-btn layui-btn-sm" onclick="uplaod()"><i class="layui-icon"></i>上传文件</a>
+        <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="addFloder()"><i class="layui-icon layui-icon-add-circle-fine"></i>新建文件夹</a>
+        <a class="layui-btn layui-btn-primary layui-btn-sm" onclick="ObsDownload()"><i class="layui-icon layui-icon-download-circle"></i>下载文件</a>
+        <a class="layui-btn layui-btn-primary layui-btn-sm" onclick="ObsCopy()">复制到</a>
+        <a class="layui-btn layui-btn-primary layui-btn-sm" onclick="ObsMove()">移动到</a>
     </div>
 </script>
 <script>
