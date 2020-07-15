@@ -15,6 +15,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.List;
 
 
 @Api(tags = "文件管理接口")
@@ -39,7 +41,8 @@ public class FilesController {
         System.out.println("文件后缀名："+suffixName);
         //创建时间：new Date()
         //状态：1
-        //路径：固定格式吧，用户的id上面有
+        //路径：固定格式
+        //https://sss-   [id]  .obs.cn-north-4.myhuaweicloud.com/  [文件名]
         long size=fileUpload.getSize()/1024;  //单位:kb
         System.out.println("文件大小："+size);
 
@@ -84,7 +87,8 @@ public class FilesController {
      */
     @PostMapping("/rename")
     public int  rename(@RequestBody ObsFile obsFile){
-        //obsFile里包含id,Obs路径,名称
+        //obs 重命名  id、文件名  obsFile
+        // 目的文件名 为了方便，我暂时放在 obsFile的path
         //改数据库
         //改obs
         //添加log记录
@@ -102,7 +106,34 @@ public class FilesController {
         return obsPage;
     }
     /**
-     * 预览暂时等待刘磊完成
+     * 预览暂时
      * @return
      */
+    @PostMapping("/preview")
+    public String preview(@RequestBody ObsFile obsFile ){
+        //obs预览调用
+        //obsFile  包含id、文件名（带后缀）
+        return null;
+    }
+    /**
+     * 复制
+     * @return
+     */
+    @PostMapping("/copy")
+    public String copy(@RequestBody ObsFile obsFile ){
+        //obs  复制  id、文件名
+        //数据库添加文件（名字后面加1、2、3...）  数据查询  文件名% 数量
+        return null;
+    }
+    /**
+     * 移动
+     * @return
+     */
+    @PostMapping("/move")
+    public String move(@RequestBody ObsFile obsFile ){
+        //obs 移动  id、文件名  obsFile
+        // 目的文件名 为了方便，我暂时放在 obsFile的path
+        return null;
+    }
+
 }
