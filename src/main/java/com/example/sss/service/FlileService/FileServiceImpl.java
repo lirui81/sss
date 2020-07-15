@@ -5,6 +5,7 @@ import com.example.sss.dao.LogMapper;
 import com.example.sss.model.domin.FileLog;
 import com.example.sss.model.domin.ObsFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @date： 2020/7/14 11:11
  * @vertion： V1.0.1
  */
+@Service
 public class FileServiceImpl implements FileService{
     @Autowired
     private FileMapper fileMapper;

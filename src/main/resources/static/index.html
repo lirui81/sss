@@ -18,7 +18,6 @@
 
 		<script src="js/jQuery.js"></script>
 		<SCRIPT src="js/common.js"></SCRIPT>
-<!--		<SCRIPT src="js/login.js"></SCRIPT>-->
 	</head>
 	<body class="layui-layout-body pear-admin">
 		<!-- 布 局 框 架 -->
@@ -26,25 +25,20 @@
 			<div class="layui-header">
 				<!-- 顶 部 左 侧 功 能 -->
 				<ul class="layui-nav layui-layout-left">
-<!--					<li class="collaspe layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>-->
 					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1"></a></li>
 				</ul>
 				<!-- 顶 部 右 侧 菜 单 -->
 				<div id="control" class="layui-layout-control"></div>
 				<ul class="layui-nav layui-layout-right">
-<!--					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>-->
-<!--					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.cn" class="layui-icon layui-icon-website"></a></li>-->
-<!--					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>-->
 					<li class="layui-nav-item" lay-unselect="">
 						<a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img"><span id="userId"></span></a>
 						<dl class="layui-nav-child">
-							<dd><a href="info.html">个人信息</a></dd>
-							<dd><a href="uppsw.html">修改密码</a></dd>
+							<dd><a href="javascript:info()">个人信息</a></dd>
+							<dd><a href="javascript:uppsw()">修改密码</a></dd>
 							<dd><a href="upemail.html">修改邮箱</a></dd>
 							<dd><a href="login.html">退出登陆</a></dd>
 						</dl>
 					</li>
-<!--					<li class="setting layui-nav-item"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>-->
 				</ul>
 			</div>
 			<!-- 侧 边 区 域 -->
@@ -63,22 +57,41 @@
 				<div id="content"></div>
 			</div>
 		</div>
-        <!-- 遮 盖 层 -->
-<!--		<div class="pear-cover"></div>-->
-        <!-- 加 载 动 画-->
-<!--		<div class="loader-main">-->
-<!--			<div class="loader"></div>-->
-<!--		</div>-->
-        <!-- 聊 天 组 件 -->
-<!--		<div id="social" class="layui-hide-xs"></div>-->
-        <!-- 收 缩 适 配 -->
 		<div class="collaspe pe-collaspe layui-hide-sm">
 			<i class="layui-icon layui-icon-shrink-right"></i>
 		</div>
-		<!-- 依 赖 脚 本 -->
 		<script src="component/layui/layui.js"></script>
 		<script>
 			$("#userId").html(sessionStorage.getItem('userId'));
+			function info(){
+				layui.use('layer', function(){
+					var $ = layui.jquery, layer = layui.layer;
+					layer.open({
+						type: 2 //Page层类型
+						,area: ['500px', '300px']
+						,title: '个人信息'
+						,shade: 0.6 //遮罩透明度
+						,maxmin: true //允许全屏最小化
+						,anim: 1 //0-6的动画形式，-1不开启
+						,content: 'info.html'
+
+					});
+				});
+			}
+			function uppsw(){
+				layui.use('layer', function(){
+					var $ = layui.jquery,layer = layui.layer;
+					layer.open({
+						type: 2 //Page层类型
+						,area: ['500px', '300px']
+						,title: '修改密码'
+						,shade: 0.6 //遮罩透明度
+						,maxmin: true //允许全屏最小化
+						,anim: 1 //0-6的动画形式，-1不开启
+						,content: 'uppsw.html'
+					});
+				});
+			}
 			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
