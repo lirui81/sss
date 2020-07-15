@@ -28,6 +28,14 @@ public class FilesController {
     @Autowired
     private ObsService obsService;
 
+    /**
+     *
+     * 统一说明，log类的mapper之类的文件暂时还没有建
+     * 有时间就建一下，只需要添加和查询
+     * 没时间我们可以先放一放，暂时前端没有显示日志记录
+     *
+     */
+
     @PostMapping("/upload")
     @ResponseBody
     public int uploadOne(@RequestParam("file") MultipartFile fileUpload,Integer id){
@@ -106,7 +114,7 @@ public class FilesController {
         return obsPage;
     }
     /**
-     * 预览暂时
+     * 预览
      * @return
      */
     @PostMapping("/preview")
@@ -121,8 +129,16 @@ public class FilesController {
      */
     @PostMapping("/copy")
     public String copy(@RequestBody ObsFile obsFile ){
-        //obs  复制  id、文件名
-        //数据库添加文件（名字后面加1、2、3...）  数据查询  文件名% 数量
+        //obsFile：  id、文件名
+        // 目的文件名 为了方便，我暂时放在 obsFile的path
+        //1、文件名与目的文件名一样
+            //修改文件名（名字后面加1、2、3...）  数据库查询该文件名 数量
+            //数据库添加文件
+            //obs 复制
+        //2、文件名与目的文件名不一样
+            //数据库添加文件
+            //obs 复制
+        //添加log记录
         return null;
     }
     /**
@@ -133,6 +149,7 @@ public class FilesController {
     public String move(@RequestBody ObsFile obsFile ){
         //obs 移动  id、文件名  obsFile
         // 目的文件名 为了方便，我暂时放在 obsFile的path
+        //添加log记录
         return null;
     }
 
