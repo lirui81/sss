@@ -3,6 +3,11 @@ package com.example.sss.service.ObsService;
 import com.example.sss.model.domin.User;
 import com.obs.services.model.BucketMetadataInfoResult;
 import com.obs.services.model.BucketStorageInfo;
+import com.obs.services.model.ObsBucket;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Title:
@@ -12,6 +17,7 @@ import com.obs.services.model.BucketStorageInfo;
  * @date： 2020/7/12 19:09
  * @vertion： V1.0.1
  */
+
 public interface ObsService {
     void createBucket(Integer id);
     void deleteBucket(Integer id);
