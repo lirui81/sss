@@ -99,7 +99,7 @@ function renderTable(data) {
                             return "普通用户";
                         }
                     }}
-                , {field: 'email', title: '邮箱', sort: true}
+                , {field: 'email', title: '邮箱'}
                 , {field: 'phoneNum', title: '电话'}
                 , {field: 'state', title: '状态', sort: true,templet:function (data) {
                         if(data.state==1){

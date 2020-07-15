@@ -76,6 +76,16 @@ public class FilesController {
         ObsPage obsPage =new ObsPage();
         return obsPage;
     }
+    /**
+     * 根据路径获取下面的文件列表
+     * @return
+     */
+    @PostMapping("/slectFileList")
+    public ObsPage slectFileList(@RequestBody ObsFile obsFile){
+        //obsFile里包含创建人，文件夹路径
+        ObsPage obsPage =new ObsPage();
+        return obsPage;
+    }
 
     /**
      * 删除文件
@@ -149,6 +159,16 @@ public class FilesController {
     public String move(@RequestBody ObsFile obsFile ){
         //obs 移动  id、文件名  obsFile
         // 目的文件名 为了方便，我暂时放在 obsFile的path
+        //添加log记录
+        return null;
+    }
+    /**
+     * 添加文件夹
+     * @return
+     */
+    @PostMapping("/addFloder")
+    public String addFloder(@RequestBody ObsFile obsFile ){
+        //obs 移动  id、文件名
         //添加log记录
         return null;
     }
