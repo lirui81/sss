@@ -15,20 +15,20 @@ import java.util.Date;
  */
 public class FileLog {
     private Integer fileId;
-    private Integer logId;
+    private Integer id;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date operateTime;
-    private String operateType;
+    private Date time;
+    private String operation;
     private Integer userId;
 
     public FileLog(){ }
 
-    public FileLog(Integer fileId, Date operateTime, String operateType, Integer userId) {
+    public FileLog(Integer fileId, Integer userId, Date time, String operation) {
         this.fileId = fileId;
-        this.operateTime = operateTime;
-        this.operateType = operateType;
+        this.time = time;
+        this.operation = operation;
         this.userId = userId;
     }
 
@@ -40,28 +40,24 @@ public class FileLog {
         this.fileId = fileId;
     }
 
-    public Integer getLogId() {
-        return logId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setLogId(Integer logId) {
-        this.logId = logId;
+    public Date getTime() {
+        return time;
     }
 
-    public Date getOperateTime() {
-        return operateTime;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
-    public void setOperateTime(Date operateTime) {
-        this.operateTime = operateTime;
+    public String getOperation() {
+        return operation;
     }
 
-    public String getOperateType() {
-        return operateType;
-    }
-
-    public void setOperateType(String operateType) {
-        this.operateType = operateType;
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 
     public Integer getUserId() {

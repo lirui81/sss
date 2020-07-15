@@ -14,16 +14,31 @@
 
     <select id="selectFileListByPath"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile">
         SELECT * FROM obs_file
-        where user_id=#{userId} and
-        path like concat(#{path},'%')
+        where user_id=#{userId} and path like concat(#{path},'%')
     </select>
 
-    <select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile">
+    <!--select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
+    <select id="selectFileListByType" resultMap="BaseResultMap">
         select * from bos_file
         while user_id=#{userId} and type=#{type}
     </select>
 
+    <!--select id="selectFileListByName"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
+    <select id="selectFileListByName" resultMap="BaseResultMap">
+        SELECT * FROM obs_file
+        where user_id=#{userId} and file_name like concat('%',#{name},'%')
+    </select>
+
+    <!--select id="selectFileByName"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
+    <select id="selectFileByName" resultMap="BaseResultMap">
+        SELECT * FROM obs_file
+        where user_id=#{userId} and file_name=#{name}
+    </select>
+
     <insert id="addFile">
+        <selectKey keyProperty="fileId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into obs_file
             (file_name,file_state,make_time,path,size,type,user_id)
             values (#{fileName},#{fileState},#{makeTime},#{path},#{size},#{type},#{userId})
@@ -31,19 +46,19 @@
 
     <delete id="deleteFile">
         delete from obs_file
-        where user_id=#{userId} and path=#{path}
+        where file_id=#{id}
     </delete>
 
     <update id="updateFileName">
         update obs_file set
-        file_name=#{newName},path=#{newPath}
-        where user_id=#{userId} and path=#{path}
+        path=#{newPath},file_name=#{newName}
+        where file_id=#{id}
     </update>
 
     <update id="updateFilePath">
         update obs_file set
         path=#{newPath}
-        where user_id=#{userId} and path=#{oldPath}
+        where file_id=#{id}
     </update>
 
 </mapper>

@@ -17,5 +17,4 @@ import java.util.List;
 public interface LogMapper {
     void addLog(FileLog log);
     List<FileLog> selectLogByUserId(Integer userId);
-
 }

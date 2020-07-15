@@ -50,6 +50,10 @@ public class FilesController {
         //获取文件后缀名  根据这个填类型
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         System.out.println("文件后缀名："+suffixName);
+        System.out.println("文件路径："+path);
+        if (!"null".equals(path)){
+            path="";
+        }
         //创建时间：new Date()
         //状态：1
         //路径：固定格式
@@ -73,7 +77,6 @@ public class FilesController {
         obsFile.setFileName(fileName);
         obsFile.setPath(absolutePath);
         fileService.addFile(obsFile);
-
         //添加log记录
         logOperate.addLog(obsFile);
         return 1;
@@ -86,7 +89,9 @@ public class FilesController {
     @PostMapping("/slectFilesList")
     public ObsPage slectFilesList(@RequestBody ObsFile obsFile){
         //obsFile里包含创建人和类型，根据这个去查数据库
+        System.out.println("从数据库查询文件列表");
         List<ObsFile> list=fileService.selectFileListByType(obsFile);
+        System.out.println(list.size());
         return new ObsPage(list.size(),list);
     }
 
@@ -97,7 +102,10 @@ public class FilesController {
     @PostMapping("/slectFileList")
     public ObsPage slectFileList(@RequestBody ObsFile obsFile){
         //obsFile里包含创建人，文件夹路径
+        System.out.println("根据路径获取下面的文件列表");
+        System.out.println("文件路径："+obsFile.getPath());
         List<ObsFile> list=fileService.selectFileListByPath(obsFile);
+        System.out.println(list.size());
         return new ObsPage(list.size(),list);
     }
 
@@ -140,6 +148,7 @@ public class FilesController {
         //userid  filename
         //模糊查询文件名，路径
         List<ObsFile> list=fileService.selectFileListByName(obsFile);
+        System.out.println(list.size());
         return new ObsPage(list.size(),list);
     }
 
@@ -195,8 +204,15 @@ public class FilesController {
     @PostMapping("/addFloder")
     public String addFloder(@RequestBody ObsFile obsFile ){
         //obs 移动  id、文件名
+
+        //数据库操作
+        if (!obsFile.getPath().endsWith("/"))
+            obsFile.setPath(obsFile.getPath()+'/');
+        obsFile.setType("文件夹");
+        fileService.addFile(obsFile);
         //添加log记录
-        return null;
+        selectFile(obsFile);
+        return "1";
     }
 
 }
