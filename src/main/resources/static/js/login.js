@@ -6,6 +6,7 @@ function getRootPath(){
     var curPageUrl = window.document.location.href;
     rootPath = curPageUrl.split("//")[0] + "//" + curPageUrl.split("//")[1].split("/")[0];
     sessionStorage.setItem("rootPath",rootPath);
+    console.log("rootPath"+rootPath)
 }
 
 $(function () {
@@ -39,8 +40,9 @@ $(function () {
             user.userId=userId;
             user.password=password;
             if(userId!="" && password!=""){
+                getRootPath();
                 $.ajax({
-                    url:sessionStorage.getItem("rootPath")+ "/person/login",
+                    url:sessionStorage.getItem("rootPath")+"/person/login",
                     method: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',
