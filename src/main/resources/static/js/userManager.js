@@ -198,5 +198,4 @@ function showAddWin() {
  */
 function addUsers() {
     layer.msg('玩命开发中...');
-    window.location.href = "";
 }
