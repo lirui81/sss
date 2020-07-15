@@ -1,6 +1,6 @@
 package com.example.sss.controller;
 
-import com.example.sss.model.util.ObsBucketOperation;
+//import com.example.sss.model.util.ObsBucketOperation;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class ObsBucketObjectController {
 
-    private ObsBucketOperation obsBucketOperation=new ObsBucketOperation();
+    //private ObsBucketOperation obsBucketOperation=new ObsBucketOperation();
     /**
      * @param
      * @return

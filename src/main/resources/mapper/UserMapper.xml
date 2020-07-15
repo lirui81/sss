@@ -26,6 +26,21 @@
         set password=#{password}
         where user_id=#{userId}
     </update>
+    <update id="upemail">
+        update obs_user
+        set email=#{email}
+        where user_id=#{userId}
+    </update>
+    <update id="upphone">
+        update obs_user
+        set phone_num=#{phoneNum}
+        where user_id=#{userId}
+    </update>
+    <update id="forgetpwd">
+        update obs_user
+        set password=#{password}
+        where user_id=#{userId}
+    </update>
     <delete id="deleteUserById">
         delete from obs_user
         where id=#{id}

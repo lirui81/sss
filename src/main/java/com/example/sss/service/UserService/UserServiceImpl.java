@@ -76,4 +76,19 @@ public class UserServiceImpl implements UserService{
         obsService.deleteBucket(id);
     }
 
+    @Override
+    public void upemail(User user) {
+        userMapper.upemail(user);
+    }
+
+    @Override
+    public void forgetpwd(User user) {
+        userMapper.forgetpwd(user);
+    }
+
+    @Override
+    public void upphone(User user) {
+        userMapper.upphone(user);
+    }
+
 }
