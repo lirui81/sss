@@ -38,7 +38,7 @@ public class FilesController {
 
     @PostMapping("/upload")
     @ResponseBody
-    public int uploadOne(@RequestParam("file") MultipartFile fileUpload,Integer id){
+    public int uploadOne(@RequestParam("file") MultipartFile fileUpload,Integer id,String filePath){
         //当前用户id
         System.out.println("创建者："+id);
         //获取文件名
@@ -50,7 +50,7 @@ public class FilesController {
         //创建时间：new Date()
         //状态：1
         //路径：固定格式
-        //https://sss-   [id]  .obs.cn-north-4.myhuaweicloud.com/  [文件名]
+        //https://sss-   [id]  .obs.cn-north-4.myhuaweicloud.com/ filePath+ [文件名]
         long size=fileUpload.getSize()/1024;  //单位:kb
         System.out.println("文件大小："+size);
 
@@ -170,7 +170,7 @@ public class FilesController {
     public String addFloder(@RequestBody ObsFile obsFile ){
         //obs 移动  id、文件名
         //添加log记录
-        return null;
+        return "1";
     }
 
 }

@@ -32,35 +32,35 @@
 				"icon": "layui-icon layui-icon-picture",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/common/basic/auth.html"
+				"href": "picturesManager.html"
 				}, {
 					"id": 7,
 					"title": "文档",
-					"icon": "layui-icon .pear-iconzhangdan1",
+					"icon": "layui-icon layui-icon-picture",
 					"type": 1,
 					"openType": "_iframe",
-					"href": "view/common/basic/button.html"
+					"href": "documentsManager.html"
 				}, {
 					"id": 8,
 					"title": "视频",
 					"icon": "layui-icon layui-icon-video",
 					"type": 1,
 					"openType": "_iframe",
-					"href": "view/common/basic/button.html"
+					"href": "vidosManager.html"
 				}, {
 					"id": 9,
 					"title": "音乐",
 					"icon": "layui-icon layui-icon-headset",
 					"type": 1,
 					"openType": "_iframe",
-					"href": "view/common/basic/button.html"
+					"href": "musicsManager.html"
 				}, {
 					"id": 10,
 					"title": "其他",
 					"icon": "layui-icon layui-icon-file-b",
 					"type": 1,
 					"openType": "_iframe",
-					"href": "view/common/basic/button.html"
+					"href": "othersManager.html"
 				}
 		]
 	}
