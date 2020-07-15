@@ -23,6 +23,15 @@ public class UserController {
         User user1 = userService.login(user);
         return user1;
     }
+    /**
+     * @param
+     * @return
+     */
+    @RequestMapping(value="/uppsw",method= RequestMethod.POST)
+    public int uppsw(@RequestBody User user) {
+        userService.uppsw(user);
+        return 1;
+    }
 
 
 }

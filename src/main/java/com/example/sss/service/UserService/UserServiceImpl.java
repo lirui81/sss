@@ -2,8 +2,7 @@ package com.example.sss.service.UserService;
 
 import com.example.sss.dao.UserMapper;
 import com.example.sss.model.domin.User;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.example.sss.service.ObsService.ObsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +15,8 @@ public class UserServiceImpl implements UserService{
     //依赖注入
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    ObsService obsService;
 
     @Override
     public User login(User user) {
@@ -35,7 +36,9 @@ public class UserServiceImpl implements UserService{
         List<User> users = userMapper.selectUsersList(user);
         return users;
     }
+    //添加用户
     @Override
+    @Transactional
     public int addUser(User user) {
         User user1=new User();
         user1.setUserId(user.getUserId());
@@ -44,6 +47,8 @@ public class UserServiceImpl implements UserService{
         if(users.size()<1){
             try{
                 userMapper.addUser(user);
+                //为用户创建桶
+                obsService.createBucket(user.getId());
                 return 1;
             }catch(Exception e){
                 e.printStackTrace();
@@ -52,6 +57,23 @@ public class UserServiceImpl implements UserService{
         }else{
             return 2;
         }
+    }
+
+    @Override
+    public void changeState(User user) {
+        userMapper.updateState(user);
+    }
+
+    @Override
+    public void uppsw(User user) {
+        userMapper.uppsw(user);
+    }
+
+    @Override
+    public void deleteUser(Integer id) {
+        userMapper.deleteUserById(id);
+        //删除该用户的桶
+        obsService.deleteBucket(id);
     }
 
 }

@@ -11,11 +11,25 @@
         <result column="phone_num" jdbcType="VARCHAR" property="phoneNum"/>
         <result column="state" jdbcType="VARCHAR" property="state"/>
     </resultMap>
-    <insert id="addUser">
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.sss.model.domin.User">
         insert into obs_user
             (user_id,user_name,password,role,email,phone_num,state)
             values (#{userId},#{userName},#{password},#{role},#{email},#{phoneNum},#{state})
     </insert>
+    <update id="updateState">
+        update obs_user
+        set state=#{state}
+        where id=#{id}
+    </update>
+    <update id="uppsw">
+        update obs_user
+        set password=#{password}
+        where user_id=#{userId}
+    </update>
+    <delete id="deleteUserById">
+        delete from obs_user
+        where id=#{id}
+    </delete>
     <select id="selectUserByName" resultMap="BaseResultMap">
         SELECT * FROM obs_user WHERE user_name = #{name}
     </select>

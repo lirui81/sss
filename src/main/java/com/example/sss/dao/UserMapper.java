@@ -1,6 +1,7 @@
 package com.example.sss.dao;
 
 import com.example.sss.model.domin.User;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +15,7 @@ public interface UserMapper {
     User login(User user);
     List<User> selectUsersList(User user);
     void addUser(User user);
+    void updateState(User user);
+    void uppsw(User user);
+    void deleteUserById(Integer id);
 }

@@ -4,8 +4,9 @@
  */
 function getRootPath(){
     var curPageUrl = window.document.location.href;
-    var rootPath = curPageUrl.split("//")[0] + "//" + curPageUrl.split("//")[1].split("/")[0];
-    return rootPath;
+    rootPath = curPageUrl.split("//")[0] + "//" + curPageUrl.split("//")[1].split("/")[0];
+    sessionStorage.setItem("rootPath",rootPath);
+    console.log("rootPath"+rootPath)
 }
 
 $(function () {
@@ -38,10 +39,10 @@ $(function () {
             var user={};
             user.userId=userId;
             user.password=password;
-            console.log(getRootPath());
             if(userId!="" && password!=""){
+                getRootPath();
                 $.ajax({
-                    url: getRootPath() + "/person/login",
+                    url:sessionStorage.getItem("rootPath")+"/person/login",
                     method: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',
@@ -50,10 +51,18 @@ $(function () {
                         if (data.staus == true){
                             if(data.state==0){
                                 var $ = layui.jquery, layer = layui.layer;
-                                layer.msg('改账户已被禁用，请联系管理员！', {time: 3000, icon:4});
+                                layer.msg('您的账户已被禁用，如有疑问请联系管理员！', {time: 3000, icon:4});
                             }else{
+                                sessionStorage.setItem("id",data.id);//存储用户信息到session
                                 sessionStorage.setItem("userId",data.userId);//存储用户信息到session
-                                window.location.href = "index.html";
+                                sessionStorage.setItem("password",data.password);//存储用户信息到session
+                                sessionStorage.setItem("userName",data.userName);//存储用户信息到session
+                                sessionStorage.setItem("email",data.email);//存储用户信息到session
+                                sessionStorage.setItem("phoneNum",data.phoneNum);//存储用户信息到session
+                                if(data.role==1)
+                                    window.location.href="index.html";
+                                else
+                                    window.location.href = "com_index.html";
                             }
                         }else {
                             //弹出错误提示

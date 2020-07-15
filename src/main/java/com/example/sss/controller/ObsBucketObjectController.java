@@ -16,5 +16,6 @@ public class ObsBucketObjectController {
      * @param
      * @return
      */
+    //增删查改
 
 }

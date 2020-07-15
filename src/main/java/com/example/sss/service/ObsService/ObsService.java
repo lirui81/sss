@@ -1,6 +1,5 @@
 package com.example.sss.service.ObsService;
 
-import com.example.sss.model.domin.User;
 import com.obs.services.model.BucketMetadataInfoResult;
 import com.obs.services.model.BucketStorageInfo;
 import com.obs.services.model.ObsBucket;
@@ -8,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import java.io.IOException;
 
 /**
  * Title:

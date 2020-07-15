@@ -8,7 +8,6 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Api(tags = "用户管理接口")
 @RequestMapping("/users")
@@ -38,6 +37,26 @@ public class UsersController {
     @RequestMapping(value="/add",method= RequestMethod.POST)
     public int addUser(@RequestBody User user) {
         return userService.addUser(user);
+    }
+    /**
+     * 修改用户状态
+     * @param user
+     * @return
+     */
+    @RequestMapping(value="/changeState",method= RequestMethod.POST)
+    public int changeState(@RequestBody User user) {
+        userService.changeState(user);
+        return 1;
+    }
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/deleteUser",method= RequestMethod.POST)
+    public int deleteUser(@RequestBody Integer id) {
+        userService.deleteUser(id);
+        return 1;
     }
 
 
