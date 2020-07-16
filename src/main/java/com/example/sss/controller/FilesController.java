@@ -35,13 +35,6 @@ public class FilesController {
     private BucketObjectService bucketObjectService;
     @Autowired
     private LogOperate logOperate;
-    /**
-     *
-     * 统一说明，log类的mapper之类的文件暂时还没有建
-     * 有时间就建一下，只需要添加和查询
-     * 没时间我们可以先放一放，暂时前端没有显示日志记录
-     *
-     */
 
     @PostMapping("/upload")
     @ResponseBody
@@ -54,7 +47,7 @@ public class FilesController {
             path="";
         }
         String absolutePath=path+fileName;
-        long size=fileUpload.getSize()/1024;  //单位:kb
+        double size=fileUpload.getSize();  //单位:b
         System.out.println("文件路径："+absolutePath);
 
         //将MultipartFile转换成inputStream
@@ -71,7 +64,16 @@ public class FilesController {
         ObsFile obsFile=new ObsFile();
         obsFile.setUserId(id);
         obsFile.setType(fileService.getType(suffixName));
-        obsFile.setSize(Long.toString(size) +"KB");
+        if (size/1048576000>=1){
+            obsFile.setSize(String.format("%.2f", size/1073741824) +"GB");
+        }else if (size/1024000>=1){
+            obsFile.setSize(String.format("%.2f", size/1048576) +"MB");
+        }else if(size/1000>=1){
+            obsFile.setSize(fileUpload.getSize()/1024 +"KB");
+        }else {
+            obsFile.setSize(fileUpload.getSize() +"B");
+        }
+
         obsFile.setFileState(1);
         obsFile.setMakeTime(new Date());
         obsFile.setFileName(fileName);
@@ -177,6 +179,7 @@ public class FilesController {
         //2、文件名与目的文件名不一样
             //数据库添加文件
             //obs 复制
+        fileService.copyFile(obsFile);
         //添加log记录
         logOperate.copyLog(obsFile);
         return null;
@@ -206,12 +209,12 @@ public class FilesController {
         //obs 移动  id、文件名
         bucketObjectService.newFolder(obsFile.getUserId(),obsFile.getPath());
         //数据库操作
-        /*if (!obsFile.getPath().endsWith("/"))
-            obsFile.setPath(obsFile.getPath()+'/');*/
+//        if (!obsFile.getPath().endsWith("/"))
+//            obsFile.setPath(obsFile.getPath()+'/');
         obsFile.setType("文件夹");
         fileService.addFile(obsFile);
         //添加log记录
-        selectFile(obsFile);
+        logOperate.addLog(obsFile);
         return "1";
     }
 

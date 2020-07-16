@@ -44,10 +44,9 @@ public interface FileService {
 
     /**
      * description:复制文件
-     * @param file 被复制的文件 包含用户id，被复制文件文件的路径
-     * @param dstPath 目标路径
+     * @param file 文件信息，原路径放在name、新路径放在path
      */
-    void copyFile(ObsFile file,String dstPath);
+    void copyFile(ObsFile file);
 
     /**
      * description:向数据库添加文件信息
@@ -56,20 +55,20 @@ public interface FileService {
     void addFile(ObsFile file);
 
     /**
-     * description:从数据库删除文件
-     * @param file 被删除的文件
+     * description:从数据库删除文件/文件夹
+     * @param file 被删除的文件 包括文件id，用户id和path
      */
     void deleteFile(ObsFile file);
 
     /**
      * description:更改文件命
-     * @param file 更新的之后的文件信息，name、path和file_id
+     * @param file 文件信息，fileId userId 原路径放在name、新路径放在path
      */
     void updateFileName(ObsFile file);
 
     /**
      * description:更改文件路径，即移动文件
-     * @param file 更新的文件信息，path里面存放的是目标路径
+     * @param file 更新的文件信息，fileId,  path里面存放的是目标路径
      */
     void updateFilePath(ObsFile file);
 }
