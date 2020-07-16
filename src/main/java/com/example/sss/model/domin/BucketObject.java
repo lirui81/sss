@@ -1,8 +1,9 @@
 package com.example.sss.model.domin;
 
+import com.example.sss.model.utils.Obs;
 import com.obs.services.ObsClient;
 
-public class BucketObject extends Obs{
+public class BucketObject extends Obs {
 
     public BucketObject(){
         super();

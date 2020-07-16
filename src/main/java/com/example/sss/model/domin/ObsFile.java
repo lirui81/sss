@@ -31,9 +31,7 @@ public class ObsFile {
         return fileId;
     }
 
-    public void setFileId(Integer fileId) {
-        this.fileId = fileId;
-    }
+    public void setFileId(Integer fileId){ this.fileId=fileId; }
 
     public String getFileName() {
         return fileName;
