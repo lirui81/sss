@@ -45,7 +45,11 @@
                     return sessionStorage.getItem("id");
                 },
                 path: function () {
-                    return sessionStorage.getItem("filePath");
+                    if(sessionStorage.getItem("filePath")!=""){
+                        return sessionStorage.getItem("filePath")+"/";
+                    }else {
+                        return sessionStorage.getItem("filePath");
+                    }
                 }
             }
             , choose: function (obj) {
