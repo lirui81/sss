@@ -1,6 +1,8 @@
 package com.example.sss.dao;
 
 import com.example.sss.model.domin.ObsFile;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,9 +17,12 @@ import java.util.List;
  */
 @Repository
 public interface FileMapper {
-    List<ObsFile> selectFileListByPath(Integer userId, String path);
+    List<ObsFile> selectFileListByPath(@Param("userId") Integer userId,@Param("path") String path);
+    List<ObsFile> selectFileListByType(@Param("userId") Integer userId,@Param("type") String type);
+    List<ObsFile> selectFileListByName(@Param("userId") Integer userId,@Param("name") String name);
+    List<ObsFile> selectFileByName(@Param("userId") Integer userId,@Param("name") String name);
     void addFile(ObsFile file);
-    void deleteFile(Integer userId,String path);
-    void updateFileName(Integer userId,String path,String newPath, String newName);
-    void updateFilePath(Integer userId,String oldPath,String newPath);
+    void deleteFile(Integer id);
+    void updateFileName(@Param("id") Integer id,@Param("newPath") String newPath,@Param("newName") String newName);
+    void updateFilePath(@Param("id") Integer id,@Param("newPath") String newPath);
 }
