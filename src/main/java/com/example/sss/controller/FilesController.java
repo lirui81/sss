@@ -6,6 +6,7 @@ import com.example.sss.model.domin.User;
 import com.example.sss.model.utils.ObsPage;
 import com.example.sss.service.FlileService.FileService;
 import com.example.sss.service.FlileService.LogOperate;
+import com.example.sss.service.ObjectService.BucketObjectService;
 import com.example.sss.service.ObsService.ObsService;
 import com.example.sss.service.UserService.UserService;
 import io.swagger.annotations.Api;
@@ -17,6 +18,9 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +32,7 @@ public class FilesController {
     @Autowired
     private FileService fileService;
     @Autowired
-    private ObsService obsService;
+    private BucketObjectService bucketObjectService;
     @Autowired
     private LogOperate logOperate;
     /**
@@ -41,31 +45,27 @@ public class FilesController {
 
     @PostMapping("/upload")
     @ResponseBody
-    public int uploadOne(@RequestParam("file") MultipartFile fileUpload,Integer id,String path){
-        //当前用户id
-        System.out.println("创建者："+id);
+    public int uploadOne(@RequestParam("file") MultipartFile fileUpload,Integer id,String path) throws IOException {
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
-        System.out.println("文件名："+fileName);
         //获取文件后缀名  根据这个填类型
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
-        System.out.println("文件后缀名："+suffixName);
-        System.out.println("文件路径："+path);
-        if (!"null".equals(path)){
+        if (path==null){
             path="";
         }
-        //创建时间：new Date()
-        //状态：1
-        //路径：固定格式
-        //path + [文件名]
         String absolutePath=path+fileName;
         long size=fileUpload.getSize()/1024;  //单位:kb
-        System.out.println("文件大小："+size);
+        System.out.println("文件路径："+absolutePath);
 
-        //将MultipartFile转换成inputStream    obs上上传用inputStream（百度）
-
+        //将MultipartFile转换成inputStream
+        InputStream inputStream = null;
+        File file = null;
+        file = File.createTempFile("temp", null);
+        fileUpload.transferTo(file);
+        inputStream = new FileInputStream(file);
+        file.deleteOnExit();
         //上传obs
-        //obsService.上传
+        bucketObjectService.uploadFile(id,inputStream,absolutePath);
 
         //数据库添加文件
         ObsFile obsFile=new ObsFile();
@@ -89,9 +89,7 @@ public class FilesController {
     @PostMapping("/slectFilesList")
     public ObsPage slectFilesList(@RequestBody ObsFile obsFile){
         //obsFile里包含创建人和类型，根据这个去查数据库
-        System.out.println("从数据库查询文件列表");
         List<ObsFile> list=fileService.selectFileListByType(obsFile);
-        System.out.println(list.size());
         return new ObsPage(list.size(),list);
     }
 
@@ -101,11 +99,12 @@ public class FilesController {
      */
     @PostMapping("/slectFileList")
     public ObsPage slectFileList(@RequestBody ObsFile obsFile){
+        if (obsFile.getPath()==null){
+            obsFile.setPath("");
+        }
         //obsFile里包含创建人，文件夹路径
-        System.out.println("根据路径获取下面的文件列表");
         System.out.println("文件路径："+obsFile.getPath());
         List<ObsFile> list=fileService.selectFileListByPath(obsFile);
-        System.out.println(list.size());
         return new ObsPage(list.size(),list);
     }
 
@@ -114,9 +113,13 @@ public class FilesController {
      * @return
      */
     @PostMapping("/deleteFile")
-    public int  deleteFile(@RequestBody ObsFile obsFile){
-        //obsFile里包含id,Obs路径
-        //删obs
+    public int deleteFile(@RequestBody ObsFile obsFile) throws IOException {
+        if("文件夹".equals(obsFile.getType())){
+            //删obs
+            bucketObjectService.DropFolder(obsFile.getUserId(),obsFile.getPath());
+        }else{
+            bucketObjectService.removeFile(obsFile.getUserId(),obsFile.getPath());
+        }
         //删数据库
         fileService.deleteFile(obsFile);
         //添加log记录
@@ -129,10 +132,11 @@ public class FilesController {
      * @return
      */
     @PostMapping("/rename")
-    public int  rename(@RequestBody ObsFile obsFile){
-        //obs 重命名  id、文件名  obsFile
-        // 目的文件名 为了方便，我暂时放在 obsFile的path
+    public int  rename(@RequestBody ObsFile obsFile) throws IOException {
+        System.out.println(obsFile.getFileName());
+        System.out.println(obsFile.getPath());
         //改obs
+        bucketObjectService.rename(obsFile.getUserId(),obsFile.getFileName(),obsFile.getPath());
         //改数据库
         fileService.updateFileName(obsFile);
         //添加log记录
@@ -145,8 +149,6 @@ public class FilesController {
      */
     @PostMapping("/selectFile")
     public ObsPage  selectFile(@RequestBody ObsFile obsFile){
-        //userid  filename
-        //模糊查询文件名，路径
         List<ObsFile> list=fileService.selectFileListByName(obsFile);
         System.out.println(list.size());
         return new ObsPage(list.size(),list);
@@ -157,10 +159,8 @@ public class FilesController {
      * @return
      */
     @PostMapping("/preview")
-    public String preview(@RequestBody ObsFile obsFile ){
-        //obs预览调用
-        //obsFile  包含id、文件名（带后缀）
-        return null;
+    public String preview(@RequestBody ObsFile obsFile ) throws IOException {
+        return bucketObjectService.preview(obsFile.getUserId(),obsFile.getPath());
     }
     /**
      * 复制
@@ -202,12 +202,12 @@ public class FilesController {
      * @return
      */
     @PostMapping("/addFloder")
-    public String addFloder(@RequestBody ObsFile obsFile ){
+    public String addFloder(@RequestBody ObsFile obsFile ) throws IOException {
         //obs 移动  id、文件名
-
+        bucketObjectService.newFolder(obsFile.getUserId(),obsFile.getPath());
         //数据库操作
-        if (!obsFile.getPath().endsWith("/"))
-            obsFile.setPath(obsFile.getPath()+'/');
+        /*if (!obsFile.getPath().endsWith("/"))
+            obsFile.setPath(obsFile.getPath()+'/');*/
         obsFile.setType("文件夹");
         fileService.addFile(obsFile);
         //添加log记录
