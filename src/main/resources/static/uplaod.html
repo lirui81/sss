@@ -43,6 +43,9 @@
             , data: {
                 id: function () {
                     return sessionStorage.getItem("id");
+                },
+                path: function () {
+                    return sessionStorage.getItem("filePath");
                 }
             }
             , choose: function (obj) {

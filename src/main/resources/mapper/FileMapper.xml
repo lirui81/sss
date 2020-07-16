@@ -19,8 +19,8 @@
 
     <!--select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
     <select id="selectFileListByType" resultMap="BaseResultMap">
-        select * from bos_file
-        while user_id=#{userId} and type=#{type}
+        select * from obs_file
+        where user_id=#{userId} and type=#{type}
     </select>
 
     <!--select id="selectFileListByName"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
@@ -46,7 +46,7 @@
 
     <delete id="deleteFile">
         delete from obs_file
-        where file_id=#{id}
+        where path like concat(#{path},'%')
     </delete>
 
     <update id="updateFileName">

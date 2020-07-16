@@ -2,18 +2,6 @@ var page="1";
 var pageSize="10";
 var table;
 $(function () {
-    datas={total:8,
-        data:[
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文档","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"login.jpg","fileState":1,"type":"图片","userId":"1","makeTime":"2020-07-15 12:12:11","path":"login.jpg","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"音乐","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"视频","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文件夹","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"其他","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文档","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文档","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"}
-        ]
-    }
     //获取表格数据
     getAllFilesList();
 
@@ -25,11 +13,8 @@ function getAllFilesList() {
     var obsFile={};
     obsFile.userId=sessionStorage.getItem("id");
     obsFile.type="音乐";
-
-    renderTable(datas);
-    renderpage(datas);
-    /*$.ajax({
-        url: sessionStorage.getItem("rootPath") + "/files/slectFileList",
+    $.ajax({
+        url: sessionStorage.getItem("rootPath") + "/files/slectFilesList",
         method: "post",
         dataType: "json",
         contentType: 'application/json;charset=utf-8',
@@ -41,7 +26,7 @@ function getAllFilesList() {
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
         }
-    })*/
+    })
 }
 
 /**
@@ -87,8 +72,8 @@ function renderTable(data) {
         table.on('tool(allFilesDemo)', function (obj) {
             var data = obj.data;
             if (obj.event === 'delete'){
-                layer.confirm('真的删除该文件/文件夹吗？', function(index){
-                    deleteFile(data.id,data.path);
+                layer.confirm('真的删除该文件吗？', function(index){
+                    deleteFile(data.fileId,data.path,data.type);
                     obj.del();
                     layer.close(index);
                 });
@@ -129,13 +114,15 @@ function renderTable(data) {
 /**
  * 删除文件
  */
-function deleteFile(id,path) {
+function deleteFile(id,path,type) {
     var obsFile = {};
-    obsFile.userId=id;
-    obsFile.fileName=path;
+    obsFile.fileId=id;
+    obsFile.userId=sessionStorage.getItem("id");
+    obsFile.path=path;
+    obsFile.type=type;
     $.ajax({
         url: sessionStorage.getItem("rootPath") + "/files/deleteFile",
-        data:JSON.stringify(id),
+        data:JSON.stringify(obsFile),
         dataType:'json',
         contentType: 'application/json;charset=utf-8',
         type:'post',

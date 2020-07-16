@@ -4,18 +4,6 @@ var table;
 var fileId,fpath;
 $(function () {
     sessionStorage.setItem("filePath","");
-    datas={total:8,
-        data:[
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文档","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"login.jpg","fileState":1,"type":"图片","userId":"1","makeTime":"2020-07-15 12:12:11","path":"login.jpg","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"音乐","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"视频","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文件夹","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"其他","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文档","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"},
-            {"fileId":1,"fileName":"文件1.txt","fileState":1,"type":"文档","userId":"1","makeTime":"2020-07-15 12:12:11","path":"文件1.txt","size":"86KB"}
-        ]
-    }
     //获取表格数据
     getAllFilesList();
 
@@ -26,10 +14,10 @@ $(function () {
 function getAllFilesList() {
     var obsFile={};
     obsFile.userId=sessionStorage.getItem("id");
-
-    renderTable(datas);
-    renderpage(datas);
-    /*$.ajax({
+    if(sessionStorage.getItem("filePath")!=""){
+        obsFile.path=sessionStorage.getItem("filePath");
+    }
+    $.ajax({
         url: sessionStorage.getItem("rootPath") + "/files/slectFileList",
         method: "post",
         dataType: "json",
@@ -42,7 +30,7 @@ function getAllFilesList() {
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
         }
-    })*/
+    })
 }
 
 /**
@@ -53,9 +41,7 @@ function getFilesList() {
     obsFile.userId=sessionStorage.getItem("id");
     obsFile.fileName=$("#filename").val();
 
-    renderTable(datas);
-    renderpage(datas);
-    /*$.ajax({
+    $.ajax({
         url: sessionStorage.getItem("rootPath") + "/files/selectFile",
         method: "post",
         dataType: "json",
@@ -68,7 +54,7 @@ function getFilesList() {
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
         }
-    })*/
+    })
 }
 
 /**
@@ -114,11 +100,15 @@ function renderTable(data) {
                 , {field: 'size',width:280, title: '文件大小',sort:true, templet: function (data) {
                         if(data.type=="文件夹"){
                             return "--";
+                        }else {
+                            return data.size;
                         }
                     }}
                 , {field: 'makeTime',width:250, title: '上传时间',sort:true, templet: function (data) {
                         if(data.type=="文件夹"){
                             return "--";
+                        }else {
+                            return data.makeTime;
                         }
                     }}
                 , {fixed: 'right', width:200,title: '操作',templet:function (data) {
@@ -135,9 +125,8 @@ function renderTable(data) {
             var data = obj.data;
             if (obj.event === 'delete'){
                 layer.confirm('真的删除该文件/文件夹吗？', function(index){
-                    deleteFile(data.id,data.path);
+                    deleteFile(data.fileId,data.path,data.type);
                     obj.del();
-                    layer.close(index);
                 });
             }else if(obj.event === 'preview'){
                 var data = obj.data;
@@ -147,9 +136,9 @@ function renderTable(data) {
                     layer.prompt({title: '输入新名称', formType: 2}, function(fileName, index){
                         var obsFile={};
                         obsFile.userId=sessionStorage.getItem("id");
-                        obsFile.fileName=data.fileName;
+                        obsFile.fileName=data.path;
                         obsFile.fileId=data.fileId;
-                        if(sessionStorage.getItem("filePath").substr(sessionStorage.getItem("filePath").length-1,1)=="/"){
+                        if(sessionStorage.getItem("filePath")==""){
                             obsFile.path=sessionStorage.getItem("filePath")+fileName;
                         }else{
                             obsFile.path=sessionStorage.getItem("filePath")+"/"+fileName;
@@ -180,18 +169,24 @@ function renderTable(data) {
 /**
  * 删除文件
  */
-function deleteFile(id,path) {
+function deleteFile(id,path,type) {
     var obsFile = {};
-    obsFile.userId=id;
-    obsFile.fileName=path;
+    obsFile.fileId=id;
+    obsFile.userId=sessionStorage.getItem("id");
+    obsFile.path=path;
+    obsFile.type=type;
     $.ajax({
         url: sessionStorage.getItem("rootPath") + "/files/deleteFile",
-        data:JSON.stringify(id),
+        data:JSON.stringify(obsFile),
         dataType:'json',
         contentType: 'application/json;charset=utf-8',
         type:'post',
         success:function(res){
-            layer.msg("删除文件/文件夹成功！",{icon:1,time:1000});
+            if(res==0){
+                layer.msg("该文件夹内含有文件，请先删除文件后重试！",{icon:0,time:1000});
+            }else{
+                layer.msg("删除文件/文件夹成功！",{icon:1,time:1000});
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             layer.msg("删除文件/文件夹失败！" ,{icon:2,time:1000});
@@ -236,10 +231,11 @@ function addFloder() {
         layer.prompt({title: '输入文件夹名称', formType: 2}, function(fileName, index){
             var obsFile={};
             obsFile.userId=sessionStorage.getItem("id");
-            if(sessionStorage.getItem("filePath").substr(sessionStorage.getItem("filePath").length-1,1)=="/"){
-                obsFile.fileName=sessionStorage.getItem("filePath")+fileName;
+            obsFile.fileName=fileName;
+            if(sessionStorage.getItem("filePath")==""){
+                obsFile.path=sessionStorage.getItem("filePath")+fileName;
             }else{
-                obsFile.fileName=sessionStorage.getItem("filePath")+"/"+fileName;
+                obsFile.path=sessionStorage.getItem("filePath")+"/"+fileName;
             }
             $.ajax({
                 url: sessionStorage.getItem("rootPath") + "/files/addFloder",
@@ -268,17 +264,22 @@ function ObsDownload() {
     var checkStatus=table.checkStatus("allFilesTable");
     if(checkStatus.data.length>0){
         //遍历下载
-        for(var i=0;i<checkStatus.data.length;i++){
+        // for(var i=0;i<checkStatus.data.length;i++){
+        if(checkStatus.data.length=1){
             if(checkStatus.data[i].type!="文件夹"){
-                window.location.href ="https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path+'?response-content-disposition=attachment'  //当前页面打开
+                if(checkStatus.data[i].type=="文档"){
+                    window.location.href ="https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path+'?response-content-disposition=attachment'  //当前页面打开
+                }
             }else{
-                window.location.href ="https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path.substring(0, checkStatus.data[i].length - 1)+'?response-content-disposition=attachment'  //当前页面打开
+                layer.msg("文件夹暂时不支持下载！")
             }
+        }else{
+            layer.msg("现在一次性只能支持一个文件下载呢，等待新版本哦~")
         }
     }else {
         layui.use('layer', function() { //独立版的layer无需执行这一句
             var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-            layer.alert('请至少选择一个文件/文件夹');
+            layer.alert('请至少选择一个文件');
         })
     }
 }
@@ -366,12 +367,28 @@ function ObsCopy() {
  */
 function openFile(path,type) {
     if(type=="图片" || type=="视频"){
-        window.open("https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+path,"_blank");
+        var obsFile={};
+        obsFile.userId=sessionStorage.getItem("id");
+        obsFile.path=path;
+        $.ajax({
+            url: sessionStorage.getItem("rootPath") + "/files/preview",
+            method: "post",
+            dataType: "text",
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(obsFile),
+            success: function (res) {
+                console.log(res);
+                window.open(res,"_blank");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
+            }
+        })
     }else if(type=="文件夹")
     {
         var obsFile={};
         obsFile.userId=sessionStorage.getItem("id");
-        obsFile.path=path;
+        obsFile.path=path+"/";
         $.ajax({
             url: sessionStorage.getItem("rootPath") + "/files/slectFileList",
             method: "post",
@@ -379,7 +396,7 @@ function openFile(path,type) {
             contentType: 'application/json;charset=utf-8',
             data: JSON.stringify(obsFile),
             success: function (res) {
-                sessionStorage.setItem("filePath",obsFile.path+"/");
+                sessionStorage.setItem("filePath",path);
                 renderTable(res);
                 renderpage(res);
             },

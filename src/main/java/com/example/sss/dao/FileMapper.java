@@ -22,7 +22,7 @@ public interface FileMapper {
     List<ObsFile> selectFileListByName(@Param("userId") Integer userId,@Param("name") String name);
     List<ObsFile> selectFileByName(@Param("userId") Integer userId,@Param("name") String name);
     void addFile(ObsFile file);
-    void deleteFile(Integer id);
+    void deleteFile(String path);
     void updateFileName(@Param("id") Integer id,@Param("newPath") String newPath,@Param("newName") String newName);
     void updateFilePath(@Param("id") Integer id,@Param("newPath") String newPath);
 }
