@@ -77,15 +77,17 @@ public class FileServiceImpl implements FileService{
     public List<ObsFile> selectFileListByPath(ObsFile file){
         if (file.getPath().isEmpty()||isDir(file.getPath())) {
             List<ObsFile> list = fileMapper.selectFileListByPath(file.getUserId(), file.getPath());
-            for(ObsFile item:list){
-                int count=count(item.getPath(), file.getPath().length());
-                //把path移除掉
-                if(isDir(item.getPath())&&count==0){
-                    list.remove(item);
+            for(int i=0;i<list.size();i++){
+                int count=count(list.get(i).getPath(), file.getPath().length());
+                //把path移除掉deleteFile
+                if(isDir(list.get(i).getPath())&&count==0){
+                    list.remove(list.get(i));
+                    i--;
                 }else{
                     //子文件夹下面的也移除掉
                     if (count!=0){
-                        list.remove(item);
+                        list.remove(list.get(i));
+                        i--;
                     }
                 }
             }
@@ -157,7 +159,7 @@ public class FileServiceImpl implements FileService{
     */
     @Override
     public void deleteFile(ObsFile file){
-        fileMapper.deleteFile(file.getFileId());
+        fileMapper.deleteFile(file.getPath());
     }
 
     /**

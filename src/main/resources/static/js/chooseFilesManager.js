@@ -95,7 +95,7 @@ function renderTable(data) {
             if (obj.event === 'delete'){
                 layer.confirm('真的删除该文件/文件夹吗？', function(index){
                     obj.del();
-                    deleteFile(data.id,data.path);
+                    deleteFile(data.fileId,data.path);
                     layer.close(index);
                 });
             }
