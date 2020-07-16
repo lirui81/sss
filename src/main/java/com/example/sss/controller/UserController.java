@@ -32,6 +32,19 @@ public class UserController {
         userService.uppsw(user);
         return 1;
     }
-
-
+    @RequestMapping(value="/upemail",method= RequestMethod.POST)
+    public int upemail(@RequestBody User user) {
+        userService.upemail(user);
+        return 1;
+    }
+    @RequestMapping(value="/forgetpwd",method= RequestMethod.POST)
+    public int forgetpwd(@RequestBody User user) {
+        userService.forgetpwd(user);
+        return 1;
+    }
+    @RequestMapping(value="/upphone",method= RequestMethod.POST)
+    public int upphone(@RequestBody User user) {
+        userService.upphone(user);
+        return 1;
+    }
 }

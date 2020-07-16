@@ -42,4 +42,10 @@ public interface UserService {
      *
      */
     void deleteUser(Integer id);
+
+    void upemail(User user);
+
+    void forgetpwd(User user);
+
+    void upphone(User user);
 }

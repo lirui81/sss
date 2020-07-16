@@ -18,4 +18,10 @@ public interface UserMapper {
     void updateState(User user);
     void uppsw(User user);
     void deleteUserById(Integer id);
+
+    void upemail(User user);
+
+    void forgetpwd(User user);
+
+    void upphone(User user);
 }
