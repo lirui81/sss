@@ -29,10 +29,14 @@
         where user_id=#{userId} and file_name like concat('%',#{name},'%')
     </select>
 
-    <!--select id="selectFileByName"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
-    <select id="selectFileByName" resultMap="BaseResultMap">
+    <select id="getFileByPath" resultMap="BaseResultMap">
         SELECT * FROM obs_file
-        where user_id=#{userId} and file_name=#{name}
+        where user_id=#{userId} and path=#{path}
+    </select>
+
+    <select id="getFileByFileId" resultMap="BaseResultMap">
+        select * from obs_file
+        where file_id=#{id}
     </select>
 
     <insert id="addFile">
@@ -44,9 +48,14 @@
             values (#{fileName},#{fileState},#{makeTime},#{path},#{size},#{type},#{userId})
     </insert>
 
+    <delete id="deleteDir">
+        delete from obs_file
+        where user_id=#{userId} and path like concat(#{path},'%')
+    </delete>
+
     <delete id="deleteFile">
         delete from obs_file
-        where path like concat(#{path},'%')
+        where file_id=#{id}
     </delete>
 
     <update id="updateFileName">

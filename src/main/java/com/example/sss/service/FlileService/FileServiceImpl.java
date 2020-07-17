@@ -51,20 +51,6 @@ public class FileServiceImpl implements FileService{
         return count;
     }
 
-    /**
-    * description:
-    * @param list 文件列表
-    * @param path 要对比的文件路径
-    * @return 存在则返回true 不存在返回false
-    */
-    private boolean isExist(List<ObsFile> list,String path){
-        for (ObsFile item:list) {
-            if(item.getPath().equals(path)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     //---------------------public---------------
 
@@ -142,24 +128,36 @@ public class FileServiceImpl implements FileService{
     /**
     * description:复制文件
     * @param file 文件信息，原路径放在name、新路径放在path
-    * @param dstPath 目标路径
     */
     @Override
-    public void copyFile(ObsFile file,String dstPath){
-        if(!isExist(fileMapper.selectFileByName(file.getUserId(), file.getFileName()), dstPath)){
-//            file.setPath(dstPath+file.getFileName());
-//            file.setMakeTime(new Date());
-            fileMapper.addFile(file);
+    public void copyFile(ObsFile file){
+        ObsFile srcFile=fileMapper.getFileByFileId(file.getFileId());
+        srcFile.setPath(file.getPath());
+        srcFile.setMakeTime(new Date());
+        ObsFile dstFile=fileMapper.getFileByPath(file.getUserId(), file.getPath());
+        //新路径不存在同名文件
+        if(dstFile==null){
+            fileMapper.addFile(srcFile);
+        }else{
+            //存在就需要删掉
+            fileMapper.deleteFile(dstFile.getFileId());
         }
     }
 
     /**
-    * description:从数据库删除文件
-    * @param file 被删除的文件
+    * description:从数据库删除文件/文件夹
+    * @param file 被删除的文件 包括文件id，用户id和path
     */
     @Override
     public void deleteFile(ObsFile file){
-        fileMapper.deleteFile(file.getPath());
+        if (isDir(file.getPath())||"文件夹".equals(file.getType())){
+            //文件夹根据所属用户和文件夹路径 将路径下的东西全删了
+            fileMapper.deleteDir(file.getUserId(), file.getPath());
+        }else {
+            //文件直接根据文件id删除
+            System.out.println("文件的ID："+file.getFileId());
+            fileMapper.deleteFile(file.getFileId());
+        }
     }
 
     /**
@@ -179,6 +177,14 @@ public class FileServiceImpl implements FileService{
     */
     @Override
     public void updateFilePath(ObsFile file){
-        fileMapper.updateFilePath(file.getFileId(), file.getPath());
+        ObsFile dstFile=fileMapper.getFileByPath(file.getUserId(), file.getPath());
+        //新路径不存在同名文件
+        if(dstFile==null){
+            fileMapper.updateFilePath(file.getFileId(), file.getPath());
+        }else{
+            //存在就需要删掉
+            fileMapper.deleteFile(dstFile.getFileId());
+        }
+
     }
 }
