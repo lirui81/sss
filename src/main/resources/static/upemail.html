@@ -21,7 +21,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="text" id="email" value="" placeholder="请输入新邮箱" class="layui-input" lay-verify="phone">
+                    <input type="text" id="email" name="myemail" value="" placeholder="请输入新邮箱" class="layui-input" lay-verify="email" onsubmit=" return validateForm()">
                 </div>
             </div>
         </div>
@@ -47,6 +47,12 @@
             var $ = layui.jquery;
             var pearHash = layui.pearHash;
             var password = pearHash.md5($("#Password").val());
+            var email= document.getElementById('email').value;
+            if(!(/^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/.test(email))){
+                layer.msg("邮箱格式有误，请重填");
+                return false;
+            }
+
             if (password != sessionStorage.getItem("password")){
                 layer.msg("密码错误", {time: 2000});
             }
