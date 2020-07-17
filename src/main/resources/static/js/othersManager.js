@@ -79,16 +79,12 @@ function renderTable(data) {
                 });
             }else if(obj.event === 'preview'){
                 var data = obj.data;
-                layer.prompt({title: '输入新名称', formType: 2}, function(fileName, index){
+                layer.prompt({title: '输入新名称',  formType: 0,value:data.fileName}, function(fileName, index){
                     var obsFile={};
                     obsFile.userId=sessionStorage.getItem("id");
                     obsFile.fileName=data.fileName;
                     obsFile.fileId=data.fileId;
-                    if(sessionStorage.getItem("filePath").substr(sessionStorage.getItem("filePath").length-1,1)=="/"){
-                        obsFile.path=sessionStorage.getItem("filePath")+fileName;
-                    }else{
-                        obsFile.path=sessionStorage.getItem("filePath")+"/"+fileName;
-                    }
+                    obsFile.path=data.path.substring(0,data.path.length-data.fileName.length)+fileName;
                     $.ajax({
                         url: sessionStorage.getItem("rootPath") + "/files/rename",
                         data:JSON.stringify(obsFile),
@@ -97,7 +93,7 @@ function renderTable(data) {
                         type:'post',
                         success:function(res){
                             layer.msg("重命名成功！",{icon:1,time:1000},function () {
-                                parent.layui.table.reload('allFilesTable');
+                                getAllFilesList();
                                 layer.close(index);
                             });
                         },
@@ -169,7 +165,8 @@ function ObsDownload() {
     if (checkStatus.data.length > 0) {
         //遍历下载
         for (var i = 0; i < checkStatus.data.length; i++) {
-            window.location.href = "https://sss-" + sessionStorage.getItem("id") + ".obs.cn-north-4.myhuaweicloud.com/" + checkStatus.data[i].path + '?response-content-disposition=attachment'  //当前页面打开
+            var res = "https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path+'?response-content-disposition=attachment';
+            window.open(res,"_blank");
         }
     } else {
         layui.use('layer', function () { //独立版的layer无需执行这一句
