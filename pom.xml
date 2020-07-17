@@ -65,6 +65,12 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>8.0.14</version>
+        </dependency>
         <!--华为云SDK-->
         <dependency>
             <groupId>com.huaweicloud</groupId>

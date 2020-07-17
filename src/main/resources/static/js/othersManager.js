@@ -179,5 +179,12 @@ function ObsDownload() {
  * 打开文件
  */
 function openFile(path,type) {
-    window.open("https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+path,"_blank");
+    if(type=="图片" || type=="视频" || type=="音乐"){
+        window.open("https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+path,"_blank");
+    }else{
+        layui.use('layer', function () { //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+            layer.msg("该类型暂时不支持预览");
+        })
+    }
 }
