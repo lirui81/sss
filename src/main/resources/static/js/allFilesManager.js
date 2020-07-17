@@ -138,11 +138,12 @@ function renderTable(data) {
                         obsFile.userId=sessionStorage.getItem("id");
                         obsFile.fileName=data.path;
                         obsFile.fileId=data.fileId;
-                        if(sessionStorage.getItem("filePath")==""){
-                            obsFile.path=sessionStorage.getItem("filePath")+fileName;
-                        }else{
-                            obsFile.path=sessionStorage.getItem("filePath")+"/"+fileName;
-                        }
+                        // if(sessionStorage.getItem("filePath")==""){
+                        //     obsFile.path=sessionStorage.getItem("filePath")+fileName;
+                        // }else{
+                        //     obsFile.path=sessionStorage.getItem("filePath")+"/"+fileName;
+                        // }
+                        obsFile.path=data.path.substring(0,data.path.length()-data.fileName.length())+fileName;
                         $.ajax({
                             url: sessionStorage.getItem("rootPath") + "/files/rename",
                             data:JSON.stringify(obsFile),
@@ -264,8 +265,8 @@ function ObsDownload() {
     var checkStatus=table.checkStatus("allFilesTable");
     if(checkStatus.data.length>0){
         //遍历下载
-        // for(var i=0;i<checkStatus.data.length;i++){
-        if(checkStatus.data.length=1){
+        for(var i=0;i<checkStatus.data.length;i++){
+        // if(checkStatus.data.length=1){
             if(checkStatus.data[i].type!="文件夹"){
                 if(checkStatus.data[i].type=="文档"){
                     window.location.href ="https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path+'?response-content-disposition=attachment'  //当前页面打开
@@ -273,9 +274,10 @@ function ObsDownload() {
             }else{
                 layer.msg("文件夹暂时不支持下载！")
             }
-        }else{
-            layer.msg("现在一次性只能支持一个文件下载呢，等待新版本哦~")
         }
+        // else{
+        //     layer.msg("现在一次性只能支持一个文件下载呢，等待新版本哦~")
+        // }
     }else {
         layui.use('layer', function() { //独立版的layer无需执行这一句
             var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
