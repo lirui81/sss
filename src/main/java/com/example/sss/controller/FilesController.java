@@ -65,13 +65,13 @@ public class FilesController {
         obsFile.setUserId(id);
         obsFile.setType(fileService.getType(suffixName));
         if (size/1048576000>=1){
-            obsFile.setSize(String.format("%.2f", size/1073741824) +"GB");
+            obsFile.setSize(String.format("%.2f", size/1073741824) +" GB");
         }else if (size/1024000>=1){
-            obsFile.setSize(String.format("%.2f", size/1048576) +"MB");
+            obsFile.setSize(String.format("%.2f", size/1048576) +" MB");
         }else if(size/1000>=1){
-            obsFile.setSize(fileUpload.getSize()/1024 +"KB");
+            obsFile.setSize(fileUpload.getSize()/1024 +" KB");
         }else {
-            obsFile.setSize(fileUpload.getSize() +"B");
+            obsFile.setSize(fileUpload.getSize() +" B");
         }
 
         obsFile.setFileState(1);

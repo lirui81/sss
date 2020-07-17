@@ -61,12 +61,12 @@ public class FileServiceImpl implements FileService{
     */
     @Override
     public List<ObsFile> selectFileListByPath(ObsFile file){
-        if (file.getPath().isEmpty()||isDir(file.getPath())) {
+        if (file.getPath().isEmpty()||file.getPath().endsWith("/")) {
             List<ObsFile> list = fileMapper.selectFileListByPath(file.getUserId(), file.getPath());
             for(int i=0;i<list.size();i++){
                 int count=count(list.get(i).getPath(), file.getPath().length());
                 //把path移除掉deleteFile
-                if(isDir(list.get(i).getPath())&&count==0){
+                if(list.get(i).getPath().endsWith("/")&&count==0){
                     list.remove(list.get(i));
                     i--;
                 }else{
@@ -76,6 +76,24 @@ public class FileServiceImpl implements FileService{
                         i--;
                     }
                 }
+    //        if (file.getPath().isEmpty()){
+    //            if (count!=0){
+    //                list.remove(list.get(i));
+    //                i--;
+    //            }
+    //        }else{
+    //            //非根目录    把path移除掉deleteFile
+    //            if("文件夹".equals(list.get(i).getType())&&count==0){
+    //                list.remove(list.get(i));
+    //                i--;
+    //            }else{
+    //                //子文件夹下面的也移除掉
+    //                if (count!=1){
+    //                    list.remove(list.get(i));
+    //                    i--;
+    //                }
+    //            }
+    //        }
             }
             return list;
         }
@@ -102,31 +120,34 @@ public class FileServiceImpl implements FileService{
     }
 
     public String getType(String name){
-        if (name.endsWith("/")){
-            return "文件夹";
-        }else if (name.endsWith("jpg")||name.endsWith("png")||name.endsWith("gif")){
+        if (name.endsWith(".jpg")||name.endsWith(".png")||name.endsWith(".gif")){
             return "图片";
-        }else if (name.endsWith("mp3")||name.endsWith("ape")||name.endsWith("wav")||name.endsWith("flac")){
+        }else if (name.endsWith(".mp3")||name.endsWith(".ape")||name.endsWith(".wav")||name.endsWith(".flac")){
             return "音乐";
-        }else if(name.endsWith("doc")||name.endsWith("txt")||name.endsWith("docx")||name.endsWith("pdf")){
+        }else if(name.endsWith(".doc")||name.endsWith(".txt")||name.endsWith(".docx")||name.endsWith(".pdf")){
             return "文档";
-        }else if (name.endsWith("mp4")||name.endsWith("avi")||name.endsWith("rmvb")||name.endsWith("mkv")){
+        }else if (name.endsWith(".mp4")||name.endsWith(".avi")||name.endsWith(".rmvb")||name.endsWith(".mkv")){
             return "视频";
         }
         return "其他";
     }
 
     /**
-    * description:向数据库添加文件信息
+    * description:向数据库添加文件信息  同名则覆盖
     * @param file 文件信息
     */
     @Override
     public void addFile(ObsFile file){
-         fileMapper.addFile(file);
+        ObsFile dstFile=fileMapper.getFileByPath(file.getUserId(), file.getPath());
+        //存在同名文件需要删掉
+        if(dstFile!=null){
+            fileMapper.deleteFile(dstFile.getFileId());
+        }
+        fileMapper.addFile(file);
     }
 
     /**
-    * description:复制文件
+    * description:复制文件 同名则覆盖
     * @param file 文件信息，原路径放在name、新路径放在path
     */
     @Override
@@ -135,13 +156,11 @@ public class FileServiceImpl implements FileService{
         srcFile.setPath(file.getPath());
         srcFile.setMakeTime(new Date());
         ObsFile dstFile=fileMapper.getFileByPath(file.getUserId(), file.getPath());
-        //新路径不存在同名文件
-        if(dstFile==null){
-            fileMapper.addFile(srcFile);
-        }else{
-            //存在就需要删掉
+        //新路径存在同名文件就需要删掉他
+        if(dstFile!=null){
             fileMapper.deleteFile(dstFile.getFileId());
         }
+        fileMapper.addFile(srcFile);
     }
 
     /**
@@ -172,19 +191,16 @@ public class FileServiceImpl implements FileService{
     }
 
     /**
-    * description:更改文件路径，即移动文件
+    * description:更改文件路径，即移动文件 同名则覆盖
     * @param file 文件信息，新路径放在path
     */
     @Override
     public void updateFilePath(ObsFile file){
         ObsFile dstFile=fileMapper.getFileByPath(file.getUserId(), file.getPath());
-        //新路径不存在同名文件
-        if(dstFile==null){
-            fileMapper.updateFilePath(file.getFileId(), file.getPath());
-        }else{
-            //存在就需要删掉
+        //新路径存在同名文件就需要删掉他
+        if(dstFile!=null){
             fileMapper.deleteFile(dstFile.getFileId());
         }
-
+        fileMapper.updateFilePath(file.getFileId(), file.getPath());
     }
 }

@@ -15,9 +15,10 @@
     <select id="selectFileListByPath"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile">
         SELECT * FROM obs_file
         where user_id=#{userId} and path like concat(#{path},'%')
-    </select>
+    <!--where user_id=#{userId} and path rlike "^#{path}"-->
+</select>
 
-    <!--select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
+<!--select id="selectFileListByType"  resultMap="BaseResultMap" parameterType="com.example.sss.model.domin.ObsFile"-->
     <select id="selectFileListByType" resultMap="BaseResultMap">
         select * from obs_file
         where user_id=#{userId} and type=#{type}
