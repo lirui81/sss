@@ -1,6 +1,7 @@
 var page="1";
 var pageSize="10";
 var table;
+var layer;
 var fileId,fpath;
 $(function () {
     sessionStorage.setItem("filePath","");
@@ -12,10 +13,14 @@ $(function () {
  * 后台返回数据填充表格 demo
  */
 function getAllFilesList() {
+    layui.use('layer', function () { //独立版的layer无需执行这一句
+        var $ = layui.jquery;
+        layer = layui.layer; //独立版的layer无需执行这一句
+    })
     var obsFile={};
     obsFile.userId=sessionStorage.getItem("id");
     if(sessionStorage.getItem("filePath")!=""){
-        obsFile.path=sessionStorage.getItem("filePath");
+        obsFile.path=sessionStorage.getItem("filePath")+"/";
     }
     $.ajax({
         url: sessionStorage.getItem("rootPath") + "/files/slectFileList",
@@ -133,17 +138,12 @@ function renderTable(data) {
                 if(data.type=="文件夹"){
                     layer.msg("文件夹暂时不能重命名哦！")
                 }else{
-                    layer.prompt({title: '输入新名称', formType: 2}, function(fileName, index){
+                    layer.prompt({title: '输入新名称', formType: 0,value:data.fileName},function(fileName, index){
                         var obsFile={};
                         obsFile.userId=sessionStorage.getItem("id");
                         obsFile.fileName=data.path;
                         obsFile.fileId=data.fileId;
-                        // if(sessionStorage.getItem("filePath")==""){
-                        //     obsFile.path=sessionStorage.getItem("filePath")+fileName;
-                        // }else{
-                        //     obsFile.path=sessionStorage.getItem("filePath")+"/"+fileName;
-                        // }
-                        obsFile.path=data.path.substring(0,data.path.length()-data.fileName.length())+fileName;
+                        obsFile.path=data.path.substring(0,data.path.length-data.fileName.length)+fileName;
                         $.ajax({
                             url: sessionStorage.getItem("rootPath") + "/files/rename",
                             data:JSON.stringify(obsFile),
@@ -152,7 +152,7 @@ function renderTable(data) {
                             type:'post',
                             success:function(res){
                                 layer.msg("重命名成功！",{icon:1,time:1000},function () {
-                                    parent.layui.table.reload('allFilesTable');
+                                    getAllFilesList();
                                     layer.close(index);
                                 });
                             },
@@ -228,7 +228,7 @@ function renderpage(date) {
  */
 function addFloder() {
     layui.use('layer', function () { //独立版的layer无需执行这一句
-        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        var $ = layui.jquery; layer = layui.layer; //独立版的layer无需执行这一句
         layer.prompt({title: '输入文件夹名称', formType: 2}, function(fileName, index){
             var obsFile={};
             obsFile.userId=sessionStorage.getItem("id");
@@ -246,7 +246,7 @@ function addFloder() {
                 type:'post',
                 success:function(res){
                     layer.msg("创建文件夹成功！",{icon:1,time:1000},function () {
-                        parent.layui.table.reload('allFilesTable');
+                        getAllFilesList();
                         layer.close(index);
                     });
                 },
@@ -266,18 +266,13 @@ function ObsDownload() {
     if(checkStatus.data.length>0){
         //遍历下载
         for(var i=0;i<checkStatus.data.length;i++){
-        // if(checkStatus.data.length=1){
             if(checkStatus.data[i].type!="文件夹"){
-                if(checkStatus.data[i].type=="文档"){
-                    window.location.href ="https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path+'?response-content-disposition=attachment'  //当前页面打开
-                }
+                var res = "https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+checkStatus.data[i].path+'?response-content-disposition=attachment';
+                window.open(res,"_blank");
             }else{
                 layer.msg("文件夹暂时不支持下载！")
             }
         }
-        // else{
-        //     layer.msg("现在一次性只能支持一个文件下载呢，等待新版本哦~")
-        // }
     }else {
         layui.use('layer', function() { //独立版的layer无需执行这一句
             var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
@@ -379,7 +374,6 @@ function openFile(path,type) {
             contentType: 'application/json;charset=utf-8',
             data: JSON.stringify(obsFile),
             success: function (res) {
-                console.log(res);
                 window.open(res,"_blank");
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -56,7 +56,13 @@
                 ,title: '文件选择'
                 ,shade: 0.6 //遮罩透明度
                 ,maxmin: true //允许全屏最小化
-                ,content: 'uplaod.html'
+                ,content: 'uplaod.html',
+                cancel: function (index, layero) {
+                    getAllFilesList();
+                },
+                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+                    getAllFilesList();
+                }
             });
         });
     }
