@@ -19,6 +19,7 @@ $(function () {
         $("body").on("click",".login",function(){
             var userId="";
             var password="";
+
             if ($("#userId").val() == null || $("#userId").val() == ''){
                 layer.tips('请填写用户名', '#userId', {
                     tips: [1, '#23cc99'],

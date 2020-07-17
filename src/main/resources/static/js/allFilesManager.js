@@ -363,7 +363,7 @@ function ObsCopy() {
  * 打开文件
  */
 function openFile(path,type) {
-    if(type=="图片" || type=="视频"){
+    if(type=="图片" || type=="视频" || type=="音乐"){
         var obsFile={};
         obsFile.userId=sessionStorage.getItem("id");
         obsFile.path=path;

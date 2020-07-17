@@ -180,5 +180,20 @@ function ObsDownload() {
  * 打开文件
  */
 function openFile(path,type) {
-    window.open("https://sss-"+sessionStorage.getItem("id")+".obs.cn-north-4.myhuaweicloud.com/"+path,"_blank");
+    var obsFile={};
+    obsFile.userId=sessionStorage.getItem("id");
+    obsFile.path=path;
+    $.ajax({
+        url: sessionStorage.getItem("rootPath") + "/files/preview",
+        method: "post",
+        dataType: "text",
+        contentType: 'application/json;charset=utf-8',
+        data: JSON.stringify(obsFile),
+        success: function (res) {
+            window.open(res,"_blank");
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
+        }
+    })
 }
