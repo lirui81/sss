@@ -24,9 +24,9 @@ public class BucketObjectServiceImpl implements BucketObjectService{
     @Override
     public Integer uploadFile(Integer id,InputStream is, String objectName) throws IOException {
         ObsClient obsClient = bucketObject.getInstance();
-        PutObjectResult result = null;
         //同名文件可能被覆盖
         String bucketName=getBucketName(id);
+        PutObjectResult result = null;
         result=obsClient.putObject(bucketName, objectName, is);
         obsClient.setObjectAcl(bucketName,objectName,AccessControlList.REST_CANNED_PUBLIC_READ_WRITE);
 
@@ -61,9 +61,11 @@ public class BucketObjectServiceImpl implements BucketObjectService{
     public String getFile(Integer id,String objectKey) {
         ObsClient obsClient = bucketObject.getInstance();
         String bucketName=getBucketName(id);
+
         boolean exist = obsClient.doesObjectExist(bucketName, objectKey);
         if (exist) {
-            ObsObject object = obsClient.getObject(bucketName, objectKey);
+//            obsClient.getObject(bucketName,objectKey);
+//            ObsObject object = obsClient.getObject(bucketName, objectKey);
             String url="https://"+bucketName+"."+bucketObject.getEndPoint()+"/"+objectKey+"?response-content-disposition=attachment";
             return url;
         }
@@ -98,6 +100,7 @@ public class BucketObjectServiceImpl implements BucketObjectService{
         String bucketName=getBucketName(id);
         obsClient.copyObject(bucketName,objectKey,bucketName,newbjectKey);
         obsClient.deleteObject(bucketName, objectKey);
+        obsClient.setObjectAcl(bucketName,newbjectKey,AccessControlList.REST_CANNED_PUBLIC_READ_WRITE);
         obsClient.close();
     }
 
@@ -107,6 +110,7 @@ public class BucketObjectServiceImpl implements BucketObjectService{
         String bucketName=getBucketName(id);
         obsClient.deleteObject(bucketName, objectKey);
         obsClient.copyObject(bucketName,objectKey,bucketName,desobjectKey);
+        obsClient.setObjectAcl(bucketName,desobjectKey,AccessControlList.REST_CANNED_PUBLIC_READ_WRITE);
         obsClient.close();
     }
 
