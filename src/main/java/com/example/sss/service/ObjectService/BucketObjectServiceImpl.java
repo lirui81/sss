@@ -108,7 +108,7 @@ public class BucketObjectServiceImpl implements BucketObjectService{
     public void copy(Integer id,String objectKey,String desobjectKey)throws IOException{
         ObsClient obsClient = bucketObject.getInstance();
         String bucketName=getBucketName(id);
-        obsClient.deleteObject(bucketName, objectKey);
+        //obsClient.deleteObject(bucketName, objectKey);
         obsClient.copyObject(bucketName,objectKey,bucketName,desobjectKey);
         obsClient.setObjectAcl(bucketName,desobjectKey,AccessControlList.REST_CANNED_PUBLIC_READ_WRITE);
         obsClient.close();
