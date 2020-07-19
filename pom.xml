@@ -78,6 +78,13 @@
             <version>[3.19.7,)</version>
         </dependency>
 
+        <!--数据驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>8.0.14</version>
+        </dependency>
 
         <!--OBS -->
         <dependency>
@@ -87,6 +94,7 @@
         </dependency>
 
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

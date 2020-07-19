@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="component/layui/css/layui.css" />
     <script src="component/layui/layui.js"></script>
     <SCRIPT src="js/common.js"></SCRIPT>
+    <style>
+        .layui-form-label:after{
+            content:"*";
+            color:red;
+            position: absolute;
+            top:5px;
+            left:15px;
+        }
+    </style>
 </head>
 <body>
 <form class="layui-form" action="">
@@ -94,7 +103,7 @@
                 timeout : 50000, //超时时间：50秒
                 success:function(res){
                     if(res==1){
-                        layer.msg("添加用户成功！",{icon:1,time:1000},function(){
+                        layer.msg("添加用户成功!默认密码是123456",{icon:1,time:1000},function(){
                             parent.getUserList();
                             parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
                         });
