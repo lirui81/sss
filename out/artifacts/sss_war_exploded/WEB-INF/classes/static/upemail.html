@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <script src="js/jQuery.js"></script>
+    <SCRIPT src="js/common.js"></SCRIPT>
+    <script src="../../../component/layui/layui.js"></script>
+<body style="padding-top: 5px">
+<!--修改密码-->
+<form class="layui-form " action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" id="Password" value="" placeholder="请输入当前密码"  class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" id="email" value="" placeholder="请输入新邮箱" class="layui-input" lay-verify="phone">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="bottom" >
+    <div style="text-align: right">
+        <button type="submit" class="layui-btn layui-btn-sm" onclick="upemail()" lay-filter="changePhone">
+            <i class="layui-icon layui-icon-ok"></i>
+            提交
+        </button>
+        <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+            <i class="layui-icon layui-icon-refresh"></i>
+            重置
+        </button>
+    </div>
+</div>
+</body>
+<script>
+    function upemail(){
+        layui.use(['pearHash','form','jquery'],function () {
+            var form = layui.form, layer = layui.layer;
+            var $ = layui.jquery;
+            var pearHash = layui.pearHash;
+            var password = pearHash.md5($("#Password").val());
+            if (password != sessionStorage.getItem("password")){
+                layer.msg("密码错误", {time: 2000});
+            }
+            else {
+                var user = {};
+                var newemail=$("#email").val();
+                console.info(newemail);;
+                sessionStorage.setItem('email',newemail);
+                console.info(sessionStorage.getItem('email'));
+                user.userId = sessionStorage.getItem("userId");
+                user.password = sessionStorage.getItem("password");
+                user.email=sessionStorage.getItem('email');
+                $.ajax({
+                    url: sessionStorage.getItem("rootPath") + "/person/upemail",
+                    method: "post",
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    data: JSON.stringify(user),
+                    async:false,
+                    success: function (data) {
+                        layer.msg("修改成功！", {icon: 1, time: 2000},function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg("修改失败！", {icon: 2, time: 2000});
+                        console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
+                    }
+                })
+            }
+    });
+    }
+</script>
+</html>

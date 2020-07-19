@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 依 赖 样 式 -->
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <link rel="stylesheet" href="admin/css/pearTab.css" />
+    <link rel="stylesheet" href="admin/css/pearTheme.css" />
+    <link rel="stylesheet" href="admin/css/pearLoad.css" />
+    <link rel="stylesheet" href="admin/css/pearFrame.css" />
+    <link rel="stylesheet" href="admin/css/pearAdmin.css" />
+    <link rel="stylesheet" href="admin/css/pearNotice.css" />
+    <link rel="stylesheet" href="admin/css/pearSocial.css" />
+    <link rel="stylesheet" href="admin/css/pearMenu.css" />
+    <!-- 主 题 更 换 -->
+    <style id="pearadmin-bg-color"></style>
+
+    <script src="js/jQuery.js"></script>
+    <SCRIPT src="js/common.js"></SCRIPT>
+</head>
+<body style="padding-top: 5px">
+<div>
+    <form class="layui-form" action="" lay-filter="example">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名：</label>
+            <div class="layui-input-block">
+                <input type="text" name="userId" lay-verify="title" autocomplete="off" class="layui-input" disabled="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">真实姓名：</label>
+            <div class="layui-input-block">
+                <input type="text" name="userName" lay-verify="title" autocomplete="off" class="layui-input" disabled="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱：</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" lay-verify="title" autocomplete="off" class="layui-input" disabled="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话：</label>
+            <div class="layui-input-block">
+                <input type="text" name="phoneNum" lay-verify="title" autocomplete="off" class="layui-input" disabled="readonly">
+            </div>
+        </div>
+<!--        <div align="center">-->
+<!--            <button class="layui-btn" lay-submit="" lay-filter="btnSave">保存</button>-->
+<!--        </div>-->
+    </form>
+</div>
+</body>
+<script src="component/layui/layui.js"></script>
+<script>
+    layui.use('form', function() {
+        var form = layui.form, layer = layui.layer;
+        //表单赋值
+        form.val('example', {
+            "userId": sessionStorage.getItem('userId')
+            , "userName": sessionStorage.getItem('userName')
+            , "email": sessionStorage.getItem('email')
+            , "phoneNum": sessionStorage.getItem('phoneNum')
+        });
+    });
+        //表单取值
+    layui.use('form',function () {
+        var form = layui.form, layer = layui.layer;
+        form.on('submit(btnSave)', function (data) {
+            var formData = data.field;
+            console.info(formData.userId);
+            sessionStorage.setItem('userId',formData.userId);
+            sessionStorage.setItem('userName',formData.userName);
+        });
+    });
+</script>
+</html>

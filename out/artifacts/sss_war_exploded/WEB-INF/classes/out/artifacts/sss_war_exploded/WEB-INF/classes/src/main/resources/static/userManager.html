@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息管理</title>
+    <script src="js/jQuery.js"></script>
+    <SCRIPT src="component/layui/layui.js"></SCRIPT>
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <script src="js/userManager.js"></script>
+
+</head>
+<body style="padding-top: 20px">
+<div>
+
+    <form class="layui-form">
+        <div class="layui-form-item">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">真实姓名</label>
+                <div class="layui-input-inline" >
+                    <input class="layui-input " id="userName" type="text" placeholder=""  >
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label" >角色</label>
+                <div class="layui-input-inline" >
+                    <select name="state" class="layui-input"  id="role" autocomplete="off" >
+                        <option value="">全部</option>
+                        <option value="1">管理员</option>
+                        <option value="0">普通用户</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline" >
+                    <select name="state" class="layui-input"  id="state" autocomplete="off" >
+                        <option value="">全部</option>
+                        <option value="1">使用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-sm" onclick="getUserList()">
+                        <i class="layui-icon layui-icon-search"></i>查询</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<table class="layui-table" lay-filter="usersDemo" id="usersTable" style="height: 100%; width: 100%">
+
+</table>
+
+<div id="usersTable_page"></div>
+
+
+</body>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-xs" onclick="showAddWin()"><i class="layui-icon layui-icon-add-circle"></i>新增用户</a>
+        <a class="layui-btn layui-btn-xs" onclick="addUsers()"><i class="layui-icon layui-icon-add-circle"></i>批量导入</a>
+    </div>
+</script>
+</html>

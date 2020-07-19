@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="component/layui/css/layui.css" />
+    <script src="js/jQuery.js"></script>
+    <SCRIPT src="js/common.js"></SCRIPT>
+    <script src="../../../component/layui/layui.js"></script>
+<body style="padding-top: 5px">
+<!--修改密码-->
+<form class="layui-form " action="" lay-filter="example">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="userId" lay-verify="title" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input type="text" id="phone" value="" placeholder="请输入手机号"  class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" id="email" value="" placeholder="请输入邮箱" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码</label>
+                <div class="layui-input-block">
+                    <input type="password" id="newPassword" value="" placeholder="请输入新密码"  id="oldPwd" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-block">
+                    <input type="password" id="newPassword1" value="" placeholder="请确认密码"  class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="bottom" >
+    <div style="text-align: right">
+        <button type="submit" class="layui-btn layui-btn-sm" onclick="forgetpwd()" lay-filter="btnSave">
+            <i class="layui-icon layui-icon-ok"></i>
+            提交
+        </button>
+        <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+            <i class="layui-icon layui-icon-refresh"></i>
+            重置
+        </button>
+    </div>
+</div>
+</body>
+<script>
+    function forgetpwd(){
+        layui.use(['pearHash','form','jquery'],function () {
+            var form = layui.form, layer = layui.layer;
+            var $ = layui.jquery;
+            var pearHash = layui.pearHash;
+            form.on('submit(btnSave)', function (data) {
+                var formData = data.field;
+                sessionStorage.setItem('userId',formData.userId);
+            });
+            var user = {};
+            console.info($("#phone").val());
+            if ($("#phone").val() !==sessionStorage.getItem('phoneNum'))
+                layer.msg("手机号错误", {time: 2000});
+            else {
+                if ($("#email").val() !=sessionStorage.getItem('email')){
+                    layer.msg("邮箱错误", {time: 2000});
+                }else {
+                    if ($("#newPassword").val() != $("#newPassword").val())
+                        layer.msg("两次密码不一致", {time: 2000});
+                    else{
+                        sessionStorage.setItem("password",pearHash.md5($("#newPassword").val()));
+                        user.userId = sessionStorage.getItem("userId");
+                        user.password = sessionStorage.getItem("password");
+                        $.ajax({
+                            url: sessionStorage.getItem("rootPath") + "/person/forgetpwd",
+                            method: "post",
+                            dataType: "json",
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify(user),
+                            async:false,
+                            success: function (data) {
+                                layer.msg("修改成功！", {icon: 1, time: 2000},function () {
+                                    parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                });
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                layer.msg("修改失败！", {icon: 2, time: 2000});
+                                console.log("失败" + XMLHttpRequest.status + ":" + textStatus + ":" + errorThrown);
+                            }
+                        })
+                    }
+
+                }
+            }
+        })
+    }
+</script>
+</html>
